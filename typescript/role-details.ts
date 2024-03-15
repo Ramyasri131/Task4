@@ -10,9 +10,11 @@ roleDetails.forEach(r => {
     let newOption :HTMLOptionElement= new Option(r.roleName, r.roleName);
     (<HTMLSelectElement>document.getElementById("roleDropDown")).add(newOption, undefined);
 })
+
 function createDescripton() :void{
     (<HTMLElement>document.getElementById("add-role-description")).innerText = role.description;
 }
+
 function createEmployeeDetailsCards():void {
     let count:number = 0;
     employee.forEach(ele => {
@@ -147,6 +149,7 @@ export function editRoleDetails():void {
 
 collectUnassignedEmployees();
 var unassignedEmployee: string[] = [];
+
 function collectUnassignedEmployees():void {
     (<HTMLElement>document.getElementById("assign-employee-section")).innerHTML = "";
     (<HTMLSelectElement>document.getElementById("location-dropdown")).value;
@@ -180,7 +183,9 @@ function collectUnassignedEmployees():void {
         }
     })
 }
+
 var visible:boolean = false;
+
 export function showUnassignedEmployees():void {
     if (visible) {
         closeUnassignedEmployees();
@@ -219,6 +224,7 @@ export function addRoleFormEmployee():void {
     localStorage.setItem('employee', JSON.stringify(employee));
 
 }
+
 document.addEventListener("click", (event: Event):void => {
     let target:EventTarget = event.target!;
     if ((<Element>target).className != "asssign-employees-container" && (<Element>target).className != "searchEmployee" && (<Element>target).className != "assign-employee" && (<Element>target).className != "assign-employee-details" && (<Element>target).className != "check-employee" && (<Element>target).className != "employee-check-box") {

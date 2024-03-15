@@ -143,6 +143,7 @@ var handleIcon :HTMLElement= document.getElementById("handle-logo") as HTMLEleme
 var mainContent:HTMLElement = document.querySelector(".main-content") as HTMLElement;
 var minSideBar:HTMLElement = document.querySelector(".minimized-side-nav") as HTMLElement;
 var screenSize:MediaQueryList = window.matchMedia("(min-width: 720px)");
+
 export function toggleSideBar():void {
     if (screenSize.matches) {
         if (sideBarOpen) {
