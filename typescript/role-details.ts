@@ -113,7 +113,7 @@ function createEmployeeDetailsCards():void {
         roleCardContainer.appendChild(detailsCard);
 
     }
-    addEditListner();
+    addListnerToViewIcon();
 }
 
 //open add employee form 
@@ -228,7 +228,7 @@ document.addEventListener("click", (event: Event):void => {
     }
 })
 
-function addEditListner():void {
+function addListnerToViewIcon():void {
     (document.querySelectorAll(".view") as NodeListOf<HTMLElement>).forEach(emp => {
         emp.addEventListener("click", function ():void {
             (document.querySelector(".view-employees") as HTMLElement).style.display = "none";

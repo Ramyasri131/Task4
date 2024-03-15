@@ -95,7 +95,7 @@ function createEmployeeDetailsCards() {
         detailsCard.innerText = "No Employees assigned for this role";
         roleCardContainer.appendChild(detailsCard);
     }
-    addEditListner();
+    addListnerToViewIcon();
 }
 //open add employee form 
 export function openAddEmployeeForm() {
@@ -199,7 +199,7 @@ document.addEventListener("click", (event) => {
         }
     }
 });
-function addEditListner() {
+function addListnerToViewIcon() {
     document.querySelectorAll(".view").forEach(emp => {
         emp.addEventListener("click", function () {
             document.querySelector(".view-employees").style.display = "none";
