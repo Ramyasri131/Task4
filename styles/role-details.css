@@ -1,0 +1,348 @@
+body {
+    margin-top: 0;
+    font-family: publicsans;
+    font-size: 12px;
+    background-color: var(--white-100);
+    gap: 1rem;
+}
+
+/* side bar css */
+/* minimized role section */
+.roles {
+    color:var(--red);
+    background-color: var(--red-200);
+
+}
+
+.minimized-roles {
+    gap: 1rem;
+    height: 2rem;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    border-radius: 5px;
+    position: relative;
+}
+
+
+
+#employee-tag .links {
+    margin-left: 0.2rem;
+}
+
+
+/* main content */
+
+/* add-employee */
+
+.roles-employees {
+    gap: 1rem;
+    color: var(--gray-100);
+    font-weight: 600;
+}
+
+#role {
+    font-size: 15px;
+}
+
+#role a {
+    text-decoration: none;
+    color: #4d4e4e;
+}
+
+#role-right {
+    height: 0.6rem;
+    width: 0.6rem;
+}
+
+.employee-icon-after {
+    right: 0;
+    position: absolute;
+    margin-top: -1rem;
+}
+
+.add-employee-btn {
+    background: var(--red-300);
+    height: 2rem;
+    width: 10rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1.3rem;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    color: var(--white);
+    gap: 0.3rem;
+    border: none;
+    outline: none;
+    font-size: 12px;
+}
+
+.all-roles {
+    padding-top: 1rem;
+    color: var(--gray);
+}
+
+#export-icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+.main-section {
+    width:100%;
+    gap: 1rem;
+}
+
+.main-content{
+    width:78%;
+}
+.add-employee {
+    margin-top: 1rem;
+    justify-content: space-between;
+}
+
+/* role desc */
+#role-data {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.role-desc span {
+    color: var(--gray);
+    line-height: 1.3rem;
+}
+
+/* styling for content of page */
+
+.view-employees {
+    height: calc(100vh - 80px);
+    overflow: auto;
+}
+
+.view-employees::-webkit-scrollbar {
+    display: none;
+}
+
+.details-section {
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.details-card {
+    padding: 1rem;
+    background: var(--white);
+    gap: 1rem;
+    width: 28.5%;
+    max-height: 20rem;
+    border-radius: 10px;
+    border: 1px solid var(--gray);
+}
+
+.employee-card-details img {
+    width: 2rem;
+    height: 2rem;
+}
+
+.employee-name {
+    flex-direction: column;
+    padding-left: 1rem;
+}
+
+.employee-information {
+    padding: 0.5rem;
+    margin-top: 0.1rem;
+    flex-wrap: wrap;
+}
+
+.employee-information span {
+    color:var(--gray-300);
+    padding-left: 0.2rem;
+}
+
+.view {
+    align-items: flex-end;
+    gap: 0.5rem;
+    cursor: pointer;
+
+}
+
+.view img {
+    width: 1rem;
+    height: 1rem;
+}
+
+.card-content {
+    width: 80%;
+}
+
+#emp-name {
+    font-weight: 600;
+}
+
+/* add employee form */
+.add-role-form {
+    display: none;
+    height: calc(100vh - 100px);
+    overflow: auto;
+}
+
+.add-role-form::-webkit-scrollbar {
+    display: none;
+}
+
+.add-role-container {
+    margin-left: 0.5rem;
+    width: 45%;
+    flex-direction: column;
+}
+
+.details {
+    display: block;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.page-heading {
+    font-size: 18px;
+    font-weight: 400;
+    padding-left: 0.5rem;
+}
+
+.employee-details {
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.employee-details label {
+    font-weight: 500;
+}
+
+.employee-details input[type=text] {
+    width: 13rem;
+    height: 1.5rem;
+    outline: none;
+    border: 1px solid var(--gray);
+    border-radius: 3px;
+}
+
+.employee-details select {
+    width: 13rem;
+    height: 1.9rem;
+    border: 1px solid var(--gray);
+    outline: none;
+    border-radius: 3px;
+}
+
+.employee-details select option[value=""][disabled] {
+    display: none;
+}
+
+.employee-details textarea {
+    width: 28.5rem;
+    height: 10rem;
+    resize: none;
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid var(--gray);
+}
+
+
+.employee-details input[type=text]:focus,
+.employee-details select:focus,
+.employee-details textarea:focus {
+    border: 1px solid var(--blue-500);
+}
+
+.form-buttons {
+    margin-top: 1rem;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.form-buttons button {
+    height: 2rem;
+    width: 8rem;
+    border-radius: 5px;
+}
+
+.cancel-button {
+    border: none;
+    outline: none;
+    background: var(--red-200);
+    color:var(--red);
+}
+
+.submit-button {
+    border: none;
+    outline: none;
+    background: var(--red-300);
+    color: var(--white);
+}
+
+
+.error {
+    color: var(--red);
+}
+
+.alert {
+    border: 1px solid var(--red) !important;
+}
+
+/* multiselect */
+.searchEmployee {
+    width:45%;
+    gap: 3rem;
+    display: flex;
+    background-color: var(--white);
+    border: 1px solid var(--gray);
+    padding: 0.5rem;
+    border-radius: 3px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.add-role-downarrow {
+    width: 1rem !important;
+    height: 1rem !important;
+}
+
+.asssign-employees-container {
+    display: none;
+    flex-direction: column;
+    width:45%;
+    background-color:var(--white);
+    padding: 0.5rem;
+    border-radius: 3px;
+    gap: 0.5rem;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.assign-employee-details img {
+    width: 1rem;
+    height: 1rem;
+}
+
+.assign-employee {
+    display: flex;
+    justify-content: space-between;
+}
+
+.assign-employee-details {
+    display: flex;
+    gap: .1rem;
+    font-weight: 500;
+    font-size: 13.5px;
+}
+
+@media screen and (max-width:700px) {
+    .details-card {
+        width: 90%;
+    }
+
+}
+
+@media screen and (max-width:400px) {
+    .add-employee-btn {
+        width: 14rem;
+    }
+
+}

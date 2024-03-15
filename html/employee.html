@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tezo portal</title>
+    <link rel="stylesheet" href="../styles/common/common.css">
+    <link rel="stylesheet" href="../styles/employee.css">
+    <link rel="stylesheet" href="../styles/employee-form.css">
+</head>
+
+<body>
+    <section class="main-section d-flex">
+        <aside class="minimized-side-nav">
+            <div class="minimized-icons d-flex">
+                <div class="minimized-logo d-flex">
+                    <img src="../assets/images/minimized-tezo-logo.png" alt="tezo-logo" />
+                </div>
+                <div class="vertical-icons d-flex">
+                    <p class="side-bar-heading" id="defintion">ALL</p>
+                    <div class="roles d-flex">
+                        <img src="../assets/icons/dashboard.svg" alt="dashboard" />
+                    </div>
+                    <a href="employee.html" title="Employee page">
+                        <div class="roles d-flex">
+                            <div class="employee-icon d-flex">
+                                <img src="../assets/icons/employees.svg" alt="employees-logo" />
+                            </div>
+                        </div>
+                    </a>
+                    <div class="roles-user">
+                        <p id="role-heading">ROLE </p>
+                        <a href="role.html" title="role.html">
+                            <div class="roles d-flex">
+                                <img src="../assets/icons/roles.svg" alt="roles-icon" class="role-icon" />
+                            </div>
+                        </a>
+                        <div class="access-rights d-flex">
+                            <img src="../assets/icons/assign-user.svg" alt="assign_user" class="role-icon" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <aside id="side-nav" class="d-flex">
+            <div class="side-bar">
+                <div class="logo d-flex">
+                    <img src="../assets/images/tezo-logo.png" id="tezo-logo" alt="tezo-logo" />
+                </div>
+                <p class="side-bar-heading" id="defintion">ALL</p>
+                <a href="role.html" title="Dashboard" class="links">
+                    <div class="dashboard d-flex">
+                        <img src="../assets/icons/dashboard.svg" alt="dashboard" />
+                        <span>Dashboard</span>
+                    </div>
+                </a>
+                <a href="employee.html" title="Employess" class="links">
+                    <div class="dashboard d-flex" id="employee-tag">
+                        <div class="employee-icon d-flex">
+                            <img src="../assets/icons/employees.svg" alt="employees-logo" />
+                            <span>Employees</span>
+                        </div>
+
+
+                        <div class="employee-icon-after">
+                            <span>k</span>
+                        </div>
+
+                    </div>
+                </a>
+                <div class="roles-user">
+                    <p id="role-heading">ROLE / USER MANAGEMENT</p>
+                    <a href="role.html" title="Roles" class="links">
+                        <div class="roles d-flex">
+                            <div class="role-navigation d-flex"><img src="../assets/icons/Roles.svg" alt="roles-icon"
+                                    class="role-icon" />
+                                <span>Roles</span>
+                            </div>
+                            <img src="../assets/icons/rightarrow.png" id="right-arrow" alt="right-arrow" />
+
+                        </div>
+                    </a>
+                    <a href="#" title="Access rights" class="links">
+                        <div class="access-rights d-flex">
+                            <div class="role-navigation d-flex">
+                                <img src="../assets/icons/assign-user.svg" alt="assign_user" class="role-icon" />
+                                <span>Access right</span>
+                            </div>
+                            <img src="../assets/icons/rightarrow.png" id="right-arrow" alt="right-arrow" />
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="pop-up-box">
+                <div class="pop-up">
+                    <p>Install new update 2.3.1A</p>
+                    <span>Allow to launch the new update for the AD application</span>
+                    <div class="btn-container d-flex">
+                        <button id="dismiss-btn" onclick="closeNotification()"
+                            class="add-cursor-pointer">Dismiss</button>
+                        <button id="accept-btn" onclick="closeNotification()" class="add-cursor-pointer">Accept</button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <div class="main-content">
+            <header class="header d-flex">
+                <div> <button type="submit" id="handle-logo" class="add-cursor-pointer" onclick="toggleSideBar()"> <img
+                            src="../assets/icons/handle.png" alt="handle" /></button> </div>
+                <div class="search-bar d-flex">
+                    <img src="../assets/icons/search.png" alt="search-icon" id="search" />
+                    <input type="text" name="searchbar" placeholder="Search" id="searchBar"
+                        onkeypress="displaySearchedName(event)" />
+                    <div class="header-icon d-flex">
+                        <img src="../assets/icons/language.svg" alt="lang-logo" />
+                        <img src="../assets/icons/categories.svg" alt="category" />
+                        <img src="../assets/icons/mode.svg" alt="mode" />
+                        <img src="../assets/icons/notifications.svg" alt="notifications" />
+                    </div>
+                    <div class="profile d-flex">
+                        <img src="../assets/images/profie-icon.png" alt="profile-icon" />
+                        <div class="status"></div>
+                        <div class="profile-name d-flex">
+                            <div>
+                                <p class="name-of-user">John Abraham</p>
+                                <span id="admin">Admin</span>
+                            </div>
+                            <img src="../assets/icons/down-arrow.png" alt="down-arrow" id="down-arrow"
+                                class="add-cursor-pointer" />
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- employee table -->
+            <main class="employeetable-container">
+                <div class="employee-section d-flex">
+                    <div class="employees">
+                        <p>
+                            Employees
+                        </p>
+                        <p id="note">
+                            Find all of your company's employee accounts and their associated roles.
+                        </p>
+                    </div>
+                    <div class="changes-icon d-flex">
+                        <button class="export add-cursor-pointer" onclick="exportToExcel()">
+                            <img src="../assets/icons/export.svg" alt="export-icon" id="export-icon" />
+                            <span>EXPORT</span>
+                        </button>
+
+                        <button class="add-employee add-cursor-pointer" onclick="openEmployeeForm()">
+                            <img src="../assets/icons/add.svg" alt="export-icon" id="export-icon" />
+                            <span>ADD EMPLOYEE</span>
+                        </button>
+
+
+                    </div>
+                </div>
+                <div class="filter-section d-flex">
+                    <div class="sort-icon add-cursor-pointer" onclick="hideAdvanceFilter()">
+                        <img src="../assets/icons/filter.svg" alt="filter-icon" />
+                    </div>
+                    <div class="btn-section d-flex">
+                        <button class="alphabets add-cursor-pointer">A</button>
+                        <button class="alphabets add-cursor-pointer">B</button>
+                        <button class="alphabets add-cursor-pointer">C</button>
+                        <button class="alphabets add-cursor-pointer">D</button>
+                        <button class="alphabets add-cursor-pointer">E</button>
+                        <button class="alphabets add-cursor-pointer">F</button>
+                        <button class="alphabets add-cursor-pointer">G</button>
+                        <button class="alphabets add-cursor-pointer">H</button>
+                        <button class="alphabets add-cursor-pointer">I</button>
+                        <button class="alphabets add-cursor-pointer">J</button>
+                        <button class="alphabets add-cursor-pointer">K</button>
+                        <button class="alphabets add-cursor-pointer">L</button>
+                        <button class="alphabets add-cursor-pointer">M</button>
+                        <button class="alphabets add-cursor-pointer">N</button>
+                        <button class="alphabets add-cursor-pointer">O</button>
+                        <button class="alphabets add-cursor-pointer">P</button>
+                        <button class="alphabets add-cursor-pointer">Q</button>
+                        <button class="alphabets add-cursor-pointer">R</button>
+                        <button class="alphabets add-cursor-pointer">S</button>
+                        <button class="alphabets add-cursor-pointer">T</button>
+                        <button class="alphabets add-cursor-pointer">U</button>
+                        <button class="alphabets add-cursor-pointer">V</button>
+                        <button class="alphabets add-cursor-pointer">W</button>
+                        <button class="alphabets add-cursor-pointer">X</button>
+                        <button class="alphabets add-cursor-pointer">Y</button>
+                        <button class="alphabets add-cursor-pointer">Z</button>
+                    </div>
+                </div>
+
+                <div class="advance-filter-section d-flex">
+                    <div class="advance-filter d-flex">
+                        <div class="filter-image d-flex">
+                            <span id="filter-label">Filter</span>
+                            <img src="../assets/icons/sort.png" alt="sort" id="sort-icon" class="add-cursor-pointer" />
+                        </div>
+                        <div>
+                            <select name="status" class="dropdown add-cursor-pointer" id="statusDropDown">
+                                <option value="null" disabled selected>Status</option>
+                                <option value="Active">Active</option>
+                                <option value="In-Active">In-Active</option>
+                            </select>
+                            <select name="location" class="dropdown add-cursor-pointer" id="locationDropDown">
+                                <option value="null" disabled selected>Location</option>
+                                <option value="Hyderabad">Hyderabad</option>
+                                <option value="Banglore">Banglore</option>
+                                <option value="Mumbai">Mumbai</option>
+                            </select>
+
+                            <select name="department" class="dropdown add-cursor-pointer" id="deptDropDown">
+                                <option value="null" disabled selected>Department</option>
+                                <option value="UI/UX">UI/UX</option>
+                                <option value="Product Engg">Product Engg</option>
+                                <option value="Quality Assurance">Quality Assurance</option>
+                                <option value="Marketing">Marketing</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="order-btn d-flex">
+                        <div><button id="reset-btn" class="add-cursor-pointer" onclick="resetFilters()">Reset</button>
+                        </div>
+                        <div><button id="apply-btn" class="add-cursor-pointer" onclick="applyDropDownFilter()">Apply
+                            </button></div>
+                    </div>
+                </div>
+
+                <!-- table starts here -->
+                <section class="table-container">
+                    <div class="delete-section d-flex">
+                        <div class="delete-section-left d-flex">
+                            <img src="../assets/icons/arrow-turn-left-down.svg" alt="turn left down"
+                                id="image-turn-left-down" class="add-cursor-pointer" />
+                            <button id="delete-btn" class="add-cursor-pointer"
+                                onclick="deleteSelectedEmployeeRows()">Delete</button>
+                        </div>
+
+                        <div class="delete-section-right d-flex">
+                            <img src="../assets/icons/table-add.svg" alt="table add" id="left-down" />
+                        </div>
+                    </div>
+                    <div class="table-div">
+                        <table class="table" id="employeeTable">
+                            <thead class="t-head">
+                                <tr class="table-header">
+                                    <th>
+                                        <input type="checkbox" id="headerCheckBox" onclick="checkAllCheckBoxes()">
+                                    </th>
+                                    <th onclick="sortEmployeeTable(1)">
+                                        <div class="table-heading add-cursor-pointer d-flex">
+                                            <span>USER</span>
+                                            <img src="../assets/icons/up-and-down-arrow.png" alt="up and down" />
+                                        </div>
+                                    </th>
+                                    <th onclick="sortEmployeeTable(2)">
+                                        <div class="table-heading add-cursor-pointer  d-flex">
+                                            <span>LOCATION</span>
+                                            <img src="../assets/icons/up-and-down-arrow.png" alt="up and down" />
+                                        </div>
+                                    </th>
+                                    <th onclick="sortEmployeeTable(3)">
+                                        <div class="table-heading add-cursor-pointer  d-flex">
+                                            <span>DEPARTMENT</span>
+                                            <img src="../assets/icons/up-and-down-arrow.png" alt="up and down" />
+                                        </div>
+                                    </th>
+                                    <th onclick="sortEmployeeTable(4)">
+                                        <div class="table-heading add-cursor-pointer  d-flex">
+                                            <span>ROLE</span>
+                                            <img src="../assets/icons/up-and-down-arrow.png" alt="up and down" />
+                                        </div>
+                                    </th>
+                                    <th onclick="sortEmployeeTable(5)">
+                                        <div class="table-heading add-cursor-pointer d-flex">
+                                            <span>EMP NO</span>
+                                            <img src="../assets/icons/up-and-down-arrow.png" alt="up and down" />
+                                        </div>
+                                    </th>
+                                    <th onclick="sortEmployeeTable(6)">
+                                        <div class="table-heading add-cursor-pointer d-flex">
+                                            <span>STATUS</span>
+                                            <img src="../assets/icons/up-and-down-arrow.png" alt="up and down" />
+                                        </div>
+                                    </th>
+                                    <th onclick="sortEmployeeTable(7)">
+                                        <div class="table-heading add-cursor-pointer d-flex">
+                                            <span>JOIN DT</span>
+                                            <img src="../assets/icons/up-and-down-arrow.png" alt="up and down" />
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <img src="../assets/images/dots.png" alt="more-icon" class="more-options">
+                                    </th>
+                                </tr>
+
+                            </thead>
+                            <tbody id="tableBody">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </main>
+
+            <!-- form -->
+            <main class="form-container">
+                <p class="page-heading">Add Employee</p>
+                <form class="employee-form d-flex">
+                    <div class="upload-image d-flex">
+                        <img src="../assets/images/upload-image.png" id="display-image" alt="dummy upload image" />
+                        <button class="file-upload add-cursor-pointer">
+                            <input type="file" id="file" class="upload-image-btn add-cursor-pointer" />
+                            <label for="file" class="image-upload">Edit</label>
+                        </button>
+                    </div>
+                    <div class="details">
+                        <div class="personal-info">
+                            <span class="font-weight-500">Personal information</span>
+                            <div class="form-heading">
+                                <label for="empNo">Emp No</label>
+                                <input type="text" placeholder="Text" class="user-input" id="empNo">
+                                <p id="validEmpNo"></p>
+                            </div>
+                            <div class="row-display employee-input d-flex">
+                                <div class="form-heading">
+                                    <label for="firstName">First Name</label>
+                                    <input type="text" placeholder="Text" class="user-input"
+                                        id="firstName" />
+                                    <p id="validFirstName"></p>
+                                </div>
+                                <div class="form-heading">
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" placeholder="Text" class="user-input "
+                                        id="lastName" />
+                                    <p id="validLastName"></p>
+                                </div>
+                                <div class="form-heading">
+                                    <label for="dateOfBirth">Date of Birth</label>
+                                    <input type="date" placeholder="Text" class="user-input  "
+                                        id="dateOfBirth" />
+                                    <p id="date-of-birth"></p>
+                                </div>
+                            </div>
+                            <div class="row-display employee-input d-flex">
+                                <div class="form-heading">
+                                    <label for="mailId">Email Id</label>
+                                    <input type="email" placeholder="joe.j@tezo.com"
+                                        class="user-input  add-cursor-pointer" id="mailId" />
+                                    <p id="valid"></p>
+                                </div>
+                                <div class="form-heading">
+                                    <label for="mobileNumber">Mobile Number</label>
+                                    <input type="number" placeholder="0000000000" class="user-input"
+                                        id="mobileNumber" pattern="[0-9]{10}" />
+                                    <p id="phone-number"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="employee-info">
+                            <span class="font-weight-500">Employee Information</span>
+                            <div class="row-display employee-input d-flex">
+                                <div class="form-heading ">
+                                    <label for="joinDate">Joining Date</label>
+                                    <input type="date" name="todaysdate" class="user-input add-cursor-pointer"
+                                        id="joinDate" />
+                                    <p id="date-of-join"></p>
+                                </div>
+                                <div class="form-heading">
+                                    <label for="dropDownLocation">Location</label>
+                                    <select class="user-input  add-cursor-pointer" id="dropDownLocation">
+                                        <option value="" disabled selected>Location</option>
+                                        <option value="Hyderabad">Hyderabad</option>
+                                        <option value="Banglore">Banglore</option>
+                                        <option value="Mumbai">Mumbai</option>
+                                    </select>
+                                    <p id="city"></p>
+                                </div>
+                            </div>
+                            <div class="row-display employee-input d-flex">
+                                <div class="form-heading">
+                                    <label for="roleDropDown">Role</label>
+                                    <select name="job title" class="user-input add-cursor-pointer" id="roleDropDown">
+                                        <option value="" disabled selected>Role</option>
+                                    </select>
+                                    <p id="role-error"></p>
+                                </div>
+                                <div class="form-heading">
+                                    <label for="DepartmentDropDown">Department</label>
+                                    <select name="department" class="user-input add-cursor-pointer"
+                                        id="DepartmentDropDown">
+                                        <option value="" disabled selected>Department</option>
+                                        <option value="UI/UX">UI/UX</option>
+                                        <option value="Product Engg">Product Engg</option>
+                                        <option value="Marketing">Marketing</option>
+                                        <option value="Quality Assurance">Quality Assurance</option>
+                                    </select>
+                                    <p id="dept"></p>
+                                </div>
+
+                            </div>
+                            <div class="row-display employee-input d-flex">
+                                <div class="form-heading">
+                                    <label for="assignManager">Assign Manager</label>
+                                    <select name="Assign Manager" class="user-input add-cursor-pointer"
+                                        id="assignManager">
+                                        <option value="" disabled selected>Search</option>
+                                        <option value="Alekhya">Alekhya</option>
+                                        <option value="Ankitha">Ankitha</option>
+                                        <option value="Sravya">Sravya</option>
+                                    </select>
+                                    <p id="manager"></p>
+                                </div>
+                                <div class="form-heading">
+                                    <label for="assignProject">Assign Project</label>
+                                    <select name="Assign Project" class="user-input add-cursor-pointer"
+                                        id="assignProject">
+                                        <option value="" disabled selected>Search</option>
+                                        <option value="Project1">Project1</option>
+                                        <option value="Project2">Project2</option>
+                                        <option value="Project3">Project3</option>
+                                    </select>
+                                    <p id="project"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-buttons d-flex">
+                            <button type="button" class="cancel-button add-cursor-pointer"
+                                onclick="clearInputFeilds(event)">
+                                cancel
+                            </button>
+                            <button type="submit" class="submit-button add-cursor-pointer"
+                                onclick="formSubmission(event)">
+                                Add Employee
+                            </button>
+                            <button type="submit" class="edit-button add-cursor-pointer"
+                                onclick="editEmployeeDetails(event)">
+                                Edit
+                            </button>
+                            <button type="submit" class="save-button add-cursor-pointer"
+                                onclick="saveEmployeeDetails(event)">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </main>
+        </div>
+    </section>
+    <script type="module" src="../javascript/common.js"></script>
+    <script type="module" src="../javascript/employee.js"></script>
+</body>
+
+</html>
