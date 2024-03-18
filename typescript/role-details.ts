@@ -1,178 +1,203 @@
-import { fetchData, role, Role } from "./common.js";
-import { employee, roleDetails, Employee } from "./common.js"
-var exports: any = document;
+import { fetchData, role, employee, roleDetails } from "./module.js";
 fetchData();
+
+var unassignedEmployee: string[] = [];
+var visible: boolean = false;
+collectUnassignedEmployees();
+
+document.getElementsByClassName("add-employee-btn")[0].addEventListener("click", function () {
+    openAddEmployeeForm();
+});
+
+document.getElementById("search-emp")?.addEventListener("click", function () {
+    showUnassignedEmployees();
+});
+
+document.getElementsByClassName("cancel-button")[0].addEventListener("click", function () {
+    closeAddEmployeeForm();
+});
+
+document.getElementsByClassName("save-button")[0].addEventListener("click", function () {
+    addRoleFormEmployee();
+});
+
+document.getElementById("view-cancel-button")?.addEventListener("click", function () {
+    closeAddRoleForm();
+});
 
 (<HTMLInputElement>document.querySelector(".add-employee-role-name")).innerText = role.roleName;
 createEmployeeDetailsCards();
 createDescripton();
 roleDetails.forEach(r => {
-    let newOption :HTMLOptionElement= new Option(r.roleName, r.roleName);
+    let newOption: HTMLOptionElement = new Option(r.roleName, r.roleName);
     (<HTMLSelectElement>document.getElementById("roleDropDown")).add(newOption, undefined);
 })
 
-function createDescripton() :void{
+function createDescripton(): void {
     (<HTMLElement>document.getElementById("add-role-description")).innerText = role.description;
 }
 
-function createEmployeeDetailsCards():void {
-    let count:number = 0;
+function createEmployeeDetailsCards(): void {
+    let count: number = 0;
     employee.forEach(ele => {
         if (ele.role == role.roleName && ele.location == role.cityName) {
-            let roleCardContainer:HTMLElement = document.getElementById("details-card-container") as HTMLElement;
+            let roleCardContainer: HTMLElement | null = document.getElementById("details-card-container");
 
-            let detailsCard:HTMLElement  = document.createElement("div");
+            let detailsCard: HTMLElement = document.createElement("div");
             detailsCard.classList.add('details-card', 'd-flex');
 
-            let cardContent:HTMLElement  = document.createElement("div");
+            let cardContent: HTMLElement = document.createElement("div");
             cardContent.classList.add("card-content");
 
-            let employeeDetails:HTMLElement  = document.createElement("div");
+            let employeeDetails: HTMLElement = document.createElement("div");
             employeeDetails.classList.add("employee-card-details", "d-flex");
-            let employeeImg:HTMLImageElement  = document.createElement("img");
+            let employeeImg: HTMLImageElement = document.createElement("img");
             employeeImg.src = ele.employeeImg;
-            employeeDetails.appendChild(employeeImg);
 
-            let employeeName:HTMLElement  = document.createElement("div");
+            let employeeName: HTMLElement = document.createElement("div");
             employeeName.classList.add("employee-name", "d-flex");
-            let nameOfEmployee:HTMLSpanElement  = document.createElement("span");
+            let nameOfEmployee: HTMLSpanElement = document.createElement("span");
             nameOfEmployee.setAttribute('id', 'emp-name');
             nameOfEmployee.innerText = ele.Name;
-            let roleOfEmployee:HTMLSpanElement  = document.createElement("span");
+            let roleOfEmployee: HTMLSpanElement = document.createElement("span");
             roleOfEmployee.innerText = ele.role;
-            employeeName.appendChild(nameOfEmployee);
-            employeeName.appendChild(roleOfEmployee);
-            employeeDetails.appendChild(employeeName);
-
-            let IdOfEmployee:HTMLElement  = document.createElement("div");
+            let empdetails:HTMLSpanElement[]=[];
+            empdetails=[nameOfEmployee,roleOfEmployee];
+            empdetails.forEach(ele=>{
+                employeeName.appendChild(ele);
+            })
+            
+           
+            let IdOfEmployee: HTMLElement = document.createElement("div");
             IdOfEmployee.classList.add("employee-information", "d-flex");
-            let idImage:HTMLImageElement = document.createElement("img");
+            let idImage: HTMLImageElement = document.createElement("img");
             idImage.src = "../assets/icons/emp-id.svg";
-            let idNo:HTMLSpanElement = document.createElement("span");
+            let idNo: HTMLSpanElement = document.createElement("span");
             idNo.innerText = ele.empNo;
-            IdOfEmployee.appendChild(idImage);
-            IdOfEmployee.appendChild(idNo);
+           
 
-            let emailOfEmployee:HTMLElement = document.createElement("div");
+            let emailOfEmployee: HTMLElement = document.createElement("div");
             emailOfEmployee.classList.add("employee-information", "d-flex");
-            let emailImage:HTMLImageElement = document.createElement("img");
+            let emailImage: HTMLImageElement = document.createElement("img");
             emailImage.src = "../assets/icons/email-icon.svg";
-            let emailId:HTMLSpanElement = document.createElement("span");
+            let emailId: HTMLSpanElement = document.createElement("span");
             emailId.innerText = ele.mailId;
-            emailOfEmployee.appendChild(emailImage);
-            emailOfEmployee.appendChild(emailId);
+            
 
-            let deptOfEmployee:HTMLElement = document.createElement("div");
+            let deptOfEmployee: HTMLElement = document.createElement("div");
             deptOfEmployee.classList.add("employee-information", "d-flex");
 
-            let deptImage:HTMLImageElement = document.createElement("img");
+            let deptImage: HTMLImageElement = document.createElement("img");
             deptImage.src = "../assets/icons/team.svg";
-            let deptId:HTMLSpanElement = document.createElement("span");
+            let deptId: HTMLSpanElement = document.createElement("span");
             deptId.innerText = ele.department;
-            deptOfEmployee.appendChild(deptImage);
-            deptOfEmployee.appendChild(deptId);
+            
 
-            let locationOfEmployee:HTMLElement = document.createElement("div");
+            let locationOfEmployee: HTMLElement = document.createElement("div");
             locationOfEmployee.classList.add("employee-information", "d-flex");
-            let locationImage:HTMLImageElement = document.createElement("img");
+            let locationImage: HTMLImageElement = document.createElement("img");
             locationImage.src = "../assets/icons/location.svg";
-            let locationName:HTMLSpanElement = document.createElement("span");
+            let locationName: HTMLSpanElement = document.createElement("span");
             locationName.innerText = ele.location;
-            locationOfEmployee.appendChild(locationImage);
-            locationOfEmployee.appendChild(locationName);
+            
 
-            cardContent.appendChild(employeeDetails);
-            cardContent.appendChild(IdOfEmployee);
-            cardContent.appendChild(emailOfEmployee);
-            cardContent.appendChild(deptOfEmployee);
-            cardContent.appendChild(locationOfEmployee);
+            let empCardDetails:HTMLElement[]=[];
+            empCardDetails=[employeeDetails,IdOfEmployee,emailOfEmployee,deptOfEmployee,locationOfEmployee];
+            empCardDetails.forEach(ele=>{
+                cardContent.appendChild(ele);
+            })
 
-            let view:HTMLElement = document.createElement("div");
+            let view: HTMLElement = document.createElement("div");
             view.classList.add("view");
             view.classList.add("d-flex");
 
-            let heading:HTMLSpanElement = document.createElement("span");
+            let heading: HTMLSpanElement = document.createElement("span");
             heading.innerText = "View";
             let arrowImg = document.createElement("img");
             arrowImg.src = "../assets/icons/view.png";
-            view.appendChild(heading);
-            view.appendChild(arrowImg);
 
-            detailsCard.appendChild(cardContent);
-            detailsCard.appendChild(view);
+            let parent=[employeeDetails,IdOfEmployee,emailOfEmployee,deptOfEmployee,locationOfEmployee, view,detailsCard];
 
-            roleCardContainer.appendChild(detailsCard);
+            let child=[[employeeImg,employeeName],[idImage,idNo],[emailImage,emailId],[deptImage,deptId],[locationImage,locationName],[heading,arrowImg],[cardContent,view]];
+
+            for(let p=0;p< parent?.length;p++)
+            {
+                for(let c=0;c<child[p].length;c++)
+                {
+                    parent[p].appendChild(<Node><HTMLElement>child[p][c]);
+                }
+            }
+
+            roleCardContainer?.appendChild(detailsCard);
             count += 1;
         }
 
     })
+
     if (count == 0) {
-        let roleCardContainer:HTMLElement = document.getElementById("details-card-container") as HTMLElement;
-        let detailsCard:HTMLElement = document.createElement("div");
+        let roleCardContainer: HTMLElement | null = document.getElementById("details-card-container") as HTMLElement | null;
+        let detailsCard: HTMLElement = document.createElement("div");
         detailsCard.classList.add("details-card");
 
         detailsCard.innerText = "No Employees assigned for this role";
-        roleCardContainer.appendChild(detailsCard);
-
+        roleCardContainer ? roleCardContainer.appendChild(detailsCard) : null;
     }
-    addListnerToViewIcon();
+    viewOnClick();
 }
 
 //open add employee form 
-export function openAddEmployeeForm():void {
-    editRoleDetails();
+export function openAddEmployeeForm(): void {
+    displayRoleDetails();
     (<HTMLElement>document.querySelector(".view-employees")).style.display = "none";
     (<HTMLElement>document.querySelector(".add-role-form")).style.display = "block";
     (<HTMLElement>document.querySelector(".form-container")).style.display = "none";
 }
 
-export function closeAddEmployeeForm():void {
+export function closeAddEmployeeForm(): void {
     (<HTMLElement>document.querySelector(".view-employees")).style.display = "block";
     (<HTMLElement>document.querySelector(".add-role-form")).style.display = "none";
     (<HTMLElement>document.querySelector(".form-container")).style.display = "none";
 }
 
 
-export function editRoleDetails():void {
-    let inputRole:HTMLSelectElement = document.getElementById("role-name-input") as HTMLSelectElement;
-    let inputDepartment:HTMLSelectElement = document.getElementById("department-dropdown") as HTMLSelectElement;
-    let inputLocation:HTMLSelectElement = document.getElementById("location-dropdown") as HTMLSelectElement;
-    inputRole.value = role.roleName;
-    inputLocation.value = role.cityName;
-    inputDepartment.disabled = true;
-    inputRole.disabled = true;
-    inputLocation.disabled = true;
+export function displayRoleDetails(): void {
+    let inputRole: HTMLSelectElement | null = document.getElementById("role-name-input") as HTMLSelectElement | null;
+    let inputDepartment: HTMLSelectElement | null = document.getElementById("department-dropdown") as HTMLSelectElement | null;
+    let inputLocation: HTMLSelectElement | null = document.getElementById("location-dropdown") as HTMLSelectElement | null;
+    inputRole ? inputRole.value = role.roleName : null;
+    inputLocation ? inputLocation.value = role.cityName : null;
+    inputDepartment ? inputDepartment.disabled = true : null;
+    inputRole ? inputRole.disabled = true : null;
+    inputLocation ? inputLocation.disabled = true : null;
     (<HTMLInputElement>document.getElementById("description")).disabled = true;
     (<HTMLElement>document.querySelector(".searchEmployee")).style.pointerEvents = "auto";
     (<HTMLButtonElement>document.querySelector(".save-button")).style.display = "block";
 }
 
-collectUnassignedEmployees();
-var unassignedEmployee: string[] = [];
 
-function collectUnassignedEmployees():void {
+function collectUnassignedEmployees(): void {
     (<HTMLElement>document.getElementById("assign-employee-section")).innerHTML = "";
     (<HTMLSelectElement>document.getElementById("location-dropdown")).value;
-    let a :number= 0;
+    let a: number = 0;
     employee.forEach(r => {
         if (r.role == "N/A" && r.location == role.cityName) {
-            let assignEmployeeDiv:HTMLElement = document.createElement("div");
+            let assignEmployeeDiv: HTMLElement = document.createElement("div");
             assignEmployeeDiv.classList.add("assign-employee");
-            let assignEmployeeDetails:HTMLDivElement = document.createElement("div");
+            let assignEmployeeDetails: HTMLDivElement = document.createElement("div");
             assignEmployeeDetails.classList.add("assign-employee-details");
-            let assignEmployeeImg:HTMLImageElement = document.createElement("img");
+            let assignEmployeeImg: HTMLImageElement = document.createElement("img");
             assignEmployeeImg.src = r.employeeImg;
-            let employeeName :HTMLLabelElement= document.createElement("label");
+            let employeeName: HTMLLabelElement = document.createElement("label");
             employeeName.classList.add("check-employee");
             employeeName.innerText = r.Name;
             employeeName.setAttribute("for", "chekCheckBox" + a);
             assignEmployeeDetails.appendChild(assignEmployeeImg);
             assignEmployeeDetails.appendChild(employeeName);
-            let check :HTMLElement= document.createElement("INPUT");
+            let check: HTMLElement = document.createElement("INPUT");
             check.setAttribute("type", "checkbox");
             check.classList.add("employee-check-box");
             check.setAttribute('id', "chekCheckBox" + a);
-            let id :string= r.empNo;
+            let id: string = r.empNo;
             check.onchange = function () {
                 checkUnassignedEmployees(this, id);
             };
@@ -184,9 +209,8 @@ function collectUnassignedEmployees():void {
     })
 }
 
-var visible:boolean = false;
 
-export function showUnassignedEmployees():void {
+export function showUnassignedEmployees(): void {
     if (visible) {
         closeUnassignedEmployees();
     }
@@ -196,16 +220,16 @@ export function showUnassignedEmployees():void {
     visible = !visible;
 }
 
-export function openUnassignedEmployees():void {
+export function openUnassignedEmployees(): void {
     (<HTMLElement>document.getElementById("assign-employee-section")).style.display = "flex";
 }
 
-export function closeUnassignedEmployees():void {
+export function closeUnassignedEmployees(): void {
     (<HTMLElement>document.getElementById("assign-employee-section")).style.display = "none";
 }
 
 //check box checked
-function checkUnassignedEmployees(className: GlobalEventHandlers, employeeID: string):void {
+function checkUnassignedEmployees(className: GlobalEventHandlers, employeeID: string): void {
     if (unassignedEmployee.includes(employeeID)) {
         unassignedEmployee.splice(unassignedEmployee.indexOf(employeeID), 1);
     }
@@ -214,19 +238,19 @@ function checkUnassignedEmployees(className: GlobalEventHandlers, employeeID: st
     }
 }
 
-export function addRoleFormEmployee():void {
-    let inputRole :HTMLSelectElement= document.getElementById("role-name-input") as HTMLSelectElement;
+export function addRoleFormEmployee(): void {
+    let inputRole: HTMLSelectElement | null = document.getElementById("role-name-input") as HTMLSelectElement | null;
     employee.forEach(r => {
         if (unassignedEmployee.includes(r.empNo)) {
-            r.role = inputRole.value;
+            r.role = <string>inputRole?.value;
         }
     })
     localStorage.setItem('employee', JSON.stringify(employee));
 
 }
 
-document.addEventListener("click", (event: Event):void => {
-    let target:EventTarget = event.target!;
+document.addEventListener("click", (event: Event): void => {
+    let target: EventTarget = event.target!;
     if ((<Element>target).className != "asssign-employees-container" && (<Element>target).className != "searchEmployee" && (<Element>target).className != "assign-employee" && (<Element>target).className != "assign-employee-details" && (<Element>target).className != "check-employee" && (<Element>target).className != "employee-check-box") {
         if ((<HTMLElement>document.querySelector(".asssign-employees-container")).style.display == "flex") {
             showUnassignedEmployees();
@@ -234,34 +258,34 @@ document.addEventListener("click", (event: Event):void => {
     }
 })
 
-function addListnerToViewIcon():void {
+function viewOnClick(): void {
     (document.querySelectorAll(".view") as NodeListOf<HTMLElement>).forEach(emp => {
-        emp.addEventListener("click", function ():void {
+        emp.addEventListener("click", function (): void {
             (document.querySelector(".view-employees") as HTMLElement).style.display = "none";
             (<HTMLElement>document.querySelector(".add-role-form")).style.display = "none";
             (<HTMLElement>document.querySelector(".form-container")).style.display = "block";
             (<HTMLInputElement>document.getElementById("firstName")).disabled = true;
-            let employeeId:string = (<HTMLElement>emp!.parentElement!.querySelector(".card-content")!.querySelector(".employee-information")!).innerText;
+            let employeeId: string = (<HTMLElement>emp!.parentElement!.querySelector(".card-content")!.querySelector(".employee-information")!).innerText;
             (<HTMLButtonElement>document.querySelector(".upload-image-btn")).disabled = true;
-            let formInputs :string[]= ["mailId", "assignProject", "assignManager", "mobileNumber", "DepartmentDropDown", "dropDownLocation", "roleDropDown"];
-            let employeeDataLabels:string[] = ["r.mailId", "r.project", "r.manager", "r.number", "r.department", "r.location", "r.role"];
+            let formInputs: string[] = ["mailId", "assignProject", "assignManager", "mobileNumber", "DepartmentDropDown", "dropDownLocation", "roleDropDown"];
+            let employeeDataLabels: string[] = ["r.mailId", "r.project", "r.manager", "r.number", "r.department", "r.location", "r.role"];
             employee.forEach(r => {
                 if (r.empNo == employeeId) {
-                    let firstName:HTMLElement = document.getElementById("firstName")!;
-                    let lastName:HTMLElement = document.getElementById("lastName")!;
-                    let dob:HTMLElement = document.getElementById("dateOfBirth")!;
-                    let dateofJoin:HTMLElement = document.getElementById("joinDate")!;
-                    let id :HTMLElement= document.getElementById("empNo")!;
-                    for (let i :number = 0; i < formInputs.length; i++) {
+                    let firstName: HTMLElement = document.getElementById("firstName")!;
+                    let lastName: HTMLElement = document.getElementById("lastName")!;
+                    let dob: HTMLElement = document.getElementById("dateOfBirth")!;
+                    let dateofJoin: HTMLElement = document.getElementById("joinDate")!;
+                    let id: HTMLElement = document.getElementById("empNo")!;
+                    for (let i: number = 0; i < formInputs.length; i++) {
                         disableInputFields(document.getElementById(formInputs[i]) as HTMLInputElement, eval(employeeDataLabels[i]));
                     }
-                    let [dd, mm, yy]:string[] = r.dateofJoin.split('/');
-                    let formattedDOJ:string = yy + "-" + mm + "-" + dd;
+                    let [dd, mm, yy]: string[] = r.dateofJoin.split('/');
+                    let formattedDOJ: string = yy + "-" + mm + "-" + dd;
                     disableInputFields(dateofJoin as HTMLInputElement, formattedDOJ);
-                    let [ddd, mmm, yyy]:string[] = r.dateOfBirth.split('/');
-                    let formattedDOB:string = yyy + "-" + mmm + "-" + ddd;
+                    let [ddd, mmm, yyy]: string[] = r.dateOfBirth.split('/');
+                    let formattedDOB: string = yyy + "-" + mmm + "-" + ddd;
                     disableInputFields(dob as HTMLInputElement, formattedDOB);
-                    let [fname, lname]:string[] = r.Name.split(" ");
+                    let [fname, lname]: string[] = r.Name.split(" ");
                     if (lname == undefined) {
                         disableInputFields(lastName as HTMLInputElement, "");
                     }
@@ -272,11 +296,11 @@ function addListnerToViewIcon():void {
                     disableInputFields(firstName as HTMLInputElement, fname);
                     disableInputFields(id as HTMLInputElement, r.empNo);
                     (<HTMLButtonElement>document.querySelector(".upload-image-btn")).addEventListener("change", function (event: any) {
-                        let imgdisplay :HTMLImageElement= document.getElementById("display-image") as HTMLImageElement;
+                        let imgdisplay: HTMLImageElement = document.getElementById("display-image") as HTMLImageElement;
                         imgdisplay.src = URL.createObjectURL(event.target.files[0]);
-                        let reader:FileReader = new FileReader();
+                        let reader: FileReader = new FileReader();
                         reader.onload = function () {
-                            let imageData :string = String(reader.result);
+                            let imageData: string = String(reader.result);
 
                         }
                         reader.readAsDataURL(event.target.files[0]);
@@ -289,19 +313,13 @@ function addListnerToViewIcon():void {
 }
 
 //to disable the items
-function disableInputFields(ele: HTMLInputElement, val: string):void {
+function disableInputFields(ele: HTMLInputElement, val: string): void {
     ele!.value = val;
     ele!.disabled = true;
 }
 
-function closeForm():void {
+function closeAddRoleForm(): void {
     (<HTMLElement>document.querySelector(".view-employees")).style.display = "block";
     (<HTMLElement>document.querySelector(".add-role-form")).style.display = "none";
     (<HTMLElement>document.querySelector(".form-container")).style.display = "none";
 }
-
-exports.closeForm = closeForm;
-exports.openAddEmployeeForm = openAddEmployeeForm;
-exports.closeAddEmployeeForm = closeAddEmployeeForm;
-exports.showUnassignedEmployees = showUnassignedEmployees;
-exports.addRoleFormEmployee = addRoleFormEmployee;

@@ -1,9 +1,39 @@
-import { fetchData, role, Role } from "./common.js";
-import { employee, roleDetails, RoleDetails, Employee } from "./common.js"
-var exports: any = document;
+import { fetchData, Role,employee, roleDetails, RoleDetails} from "./module.js";
 fetchData();
 createCards(roleDetails);
 
+var unassignedEmployee: string[]  = [];
+var visible :boolean= false;
+var selectedOptions :string[]= ["", ""];
+
+document.getElementsByClassName("add-role")[0].addEventListener("click",function(){
+    displayAddRoleForm();
+});
+
+document.getElementById("reset")?.addEventListener("click",function(){
+    resetFilters();
+});
+
+document.getElementById("apply")?.addEventListener("click",function(){
+    applyFilters();
+});
+
+document.getElementById("search-emp")?.addEventListener("click",function(){
+    showUnassignedEmployees();
+});
+
+document.getElementsByClassName("cancel-button")[0]?.addEventListener("click",function(){
+    clearFeilds();
+});
+document.getElementsByClassName("submit-button")[0]?.addEventListener("click",function(event){
+    submitRoleDetails(event);
+});
+document.getElementsByClassName("edit-button")[0]?.addEventListener("click",function(event){
+    editRoleDetails(event);
+});
+document.getElementsByClassName("save-button")[0]?.addEventListener("click",function(event){
+    saveRoleDetails(event);
+});
 
 document.addEventListener("click", (event: Event) => {
     let target:EventTarget = event.target!;
@@ -21,16 +51,16 @@ export function displayAddRoleForm():void {
     (<HTMLButtonElement>document.querySelector(".edit-button")).style.display = "none";
     (<HTMLButtonElement>document.querySelector(".submit-button")).style.display = "block";
     (<HTMLButtonElement>document.querySelector(".save-button")).style.display = "none";
-    let inputRole:HTMLInputElement = document.getElementById("role-name-input") as HTMLInputElement;
-    let inputDepartment:HTMLInputElement = document.getElementById("department-dropdown") as HTMLInputElement;
-    let inputLocation:HTMLInputElement = document.getElementById("location-dropdown") as HTMLInputElement;
-    inputDepartment.value = "";
-    inputLocation.value = "";
-    inputRole.value = "";
+    let inputRole:HTMLInputElement | null= document.getElementById("role-name-input") as HTMLInputElement | null;
+    let inputDepartment:HTMLInputElement|null = document.getElementById("department-dropdown") as HTMLInputElement | null;
+    let inputLocation:HTMLInputElement |null= document.getElementById("location-dropdown") as HTMLInputElement|null;
+    inputDepartment?inputDepartment.value = "":null;
+    inputLocation?inputLocation.value = "":null;
+    inputRole?inputRole.value = "":null;
     (<HTMLInputElement>document.getElementById("description")).value = "";
-    inputRole.disabled = false;
-    inputDepartment.disabled = false;
-    inputLocation.disabled = false;
+    inputRole?inputRole.disabled = false:null;
+    inputDepartment?inputDepartment.disabled = false:null;
+    inputLocation?inputLocation.disabled = false:null;
     (<HTMLInputElement>document.getElementById("description")).disabled = false;
 }
 
@@ -43,7 +73,6 @@ function getLocationBasedEmployees():void {
     getLocationBasedEmployees();
 });
 
-var unassignedEmployee: string[] = [];
 function collectUnassignedEmployees(pageType: string):void {
     (<HTMLElement>document.getElementById("assign-employee-section")).innerHTML = "";
     let inputLocation = (<HTMLSelectElement>document.getElementById("location-dropdown")).value;
@@ -111,7 +140,6 @@ function collectUnassignedEmployees(pageType: string):void {
     }
 }
 
-var visible :boolean= false;
 export function showUnassignedEmployees():void {
     if (visible) {
         closeUnassignedEmployees();
@@ -144,33 +172,33 @@ function checkUnassignedEmployees(className: GlobalEventHandlers, employeeID: st
 //submit details
 export function submitRoleDetails(event: Event) :void{
     event.preventDefault();
-    let inputRole:HTMLSelectElement = document.getElementById("role-name-input") as HTMLSelectElement;
-    let inputDepartment :HTMLSelectElement= document.getElementById("department-dropdown") as HTMLSelectElement;
-    let inputLocation:HTMLSelectElement = document.getElementById("location-dropdown") as HTMLSelectElement;
-    let inputDescription :HTMLTextAreaElement= document.getElementById("description") as HTMLTextAreaElement;
+    let inputRole:HTMLSelectElement |  null= document.getElementById("role-name-input") as HTMLSelectElement | null;
+    let inputDepartment :HTMLSelectElement | null= document.getElementById("department-dropdown") as HTMLSelectElement | null;
+    let inputLocation:HTMLSelectElement | null = document.getElementById("location-dropdown") as HTMLSelectElement | null;
+    let inputDescription :HTMLTextAreaElement | null= document.getElementById("description") as HTMLTextAreaElement | null;
     let isInvalid:number = 0;
-    if (inputRole.value == "") {
+    if (inputRole?.value == "") {
         inputRole.classList.add("alert");
         (<HTMLElement>document.getElementById("valid-role")).innerText = "This field is required";
         (<HTMLElement>document.getElementById("valid-role")).classList.add("error");
         isInvalid = 1;
     }
-    if (inputDepartment.value == "") {
+    if (inputDepartment?.value == "") {
         inputDepartment.classList.add("alert");
         (<HTMLElement>document.getElementById("valid-dept")).innerText = "This field is required";
         (<HTMLElement>document.getElementById("valid-dept")).classList.add("error");
         isInvalid = 1;
     }
-    if (inputLocation.value == "") {
+    if (inputLocation?.value == "") {
         inputLocation.classList.add("alert");
         (<HTMLElement>document.getElementById("valid-city")).innerText = "This field is required";
         (<HTMLElement>document.getElementById("valid-city")).classList.add("error");
         isInvalid = 1;
     }
     roleDetails.forEach(r => {
-        if (r.location == inputLocation.value) {
-            if (r.roleName == inputRole.value) {
-                inputRole.classList.add("alert");
+        if (r.location == inputLocation?.value) {
+            if (r.roleName == inputRole?.value) {
+                inputRole?.classList.add("alert");
                 (<HTMLElement>document.getElementById("valid-role")).innerText = "Role already exists";
                 (<HTMLElement>document.getElementById("valid-role")).classList.add("error");
                 isInvalid = 1;
@@ -179,10 +207,10 @@ export function submitRoleDetails(event: Event) :void{
 
     })
     if (isInvalid == 0) {
-        let roleName:string = inputRole.value;
-        let department:string = inputDepartment.value;
-        let location:string = inputLocation.value;
-        let description :string= inputDescription.value;
+        let roleName:string  = <string>inputRole?.value;
+        let department:string  = <string>inputDepartment?.value;
+        let location:string = <string>inputLocation?.value;
+        let description :string = <string>inputDescription?.value;
         let arr:RoleDetails = { roleName, department, location, description };
         roleDetails.push(arr);
         let container :HTMLElement= document.getElementById("card-container") as HTMLElement;
@@ -195,13 +223,13 @@ export function submitRoleDetails(event: Event) :void{
         localStorage.setItem('employee', JSON.stringify(employee));
         localStorage.setItem('roleDetails', JSON.stringify(roleDetails));
         createCards(roleDetails);
-        inputLocation.classList.remove("alert");
+        inputLocation?.classList.remove("alert");
         (<HTMLElement>document.getElementById("valid-city")).innerText = "";
         (<HTMLElement>document.getElementById("valid-city")).classList.remove("error");
-        inputDepartment.classList.remove("alert");
+        inputDepartment?.classList.remove("alert");
         (<HTMLElement>document.getElementById("valid-dept")).innerText = "";
         (<HTMLElement>document.getElementById("valid-dept")).classList.remove("error");
-        inputRole.classList.remove("alert");
+        inputRole?.classList.remove("alert");
         (<HTMLElement>document.getElementById("valid-role")).innerText = "";
         (<HTMLElement>document.getElementById("valid-role")).classList.remove("error");
         document.querySelectorAll(".assign-employee").forEach(r => {
@@ -214,24 +242,24 @@ export function submitRoleDetails(event: Event) :void{
 
 //to display the page
 export function clearFeilds():void {
-    let inputRole:HTMLSelectElement = document.getElementById("role-name-input") as HTMLSelectElement;
-    let inputDepartment:HTMLSelectElement = document.getElementById("department-dropdown") as HTMLSelectElement;
-    let inputLocation:HTMLSelectElement = document.getElementById("location-dropdown") as HTMLSelectElement;
-    inputRole.value = "";
-    let inputs:HTMLSelectElement[]= [inputRole, inputDepartment, inputLocation];
-    inputs.forEach(ele => {
-        ele.classList.remove("alert");
-    })
+    let inputRole:HTMLSelectElement | null = document.getElementById("role-name-input") as HTMLSelectElement | null;
+    let inputDepartment:HTMLSelectElement |null = document.getElementById("department-dropdown") as HTMLSelectElement | null;
+    let inputLocation:HTMLSelectElement|null = document.getElementById("location-dropdown") as HTMLSelectElement |null;
+    inputRole?inputRole.value = "":null;
+    let inputs:(HTMLSelectElement| null)[]= [inputRole?inputRole:null, inputDepartment?inputDepartment:null, inputLocation?inputLocation:null];
+    inputs?inputs.forEach(ele => {
+        ele?.classList.remove("alert");
+    }):null;
     let vaildMsg:string[] = ["valid-city", "valid-dept", "valid-role"];
     vaildMsg.forEach(ele => {
         (<HTMLElement>document.getElementById(ele)).innerText = "";
         (<HTMLElement>document.getElementById(ele)).classList.remove("error");
     });
     (<HTMLElement>document.getElementById("assign-employee-section")).style.display = "none";
-    inputDepartment.value = "";
-    inputLocation.value = "";
-    inputRole.disabled = false;
-    inputDepartment.disabled = false;
+    inputDepartment?inputDepartment.value = "":null;
+    inputLocation?inputLocation.value = "":null;
+    inputRole?inputRole.disabled = false:null;
+    inputDepartment?inputDepartment.disabled = false:null;
     document.querySelectorAll(".assign-employee").forEach(r => {
         (<HTMLElement>document.querySelector(".asssign-employees-container")).removeChild(r);
     });
@@ -352,12 +380,11 @@ function createCards(roleDetails: RoleDetails[]):void {
         container.appendChild(division);
 
     })
-    addViewEmployeeListner();
-    addListnerToEditIcon();
+    onclickViewEmployee();
+    onclickEditIcon();
 
 }
 
-var selectedOptions :string[]= ["", ""];
 function getSelectedOptions():void {
     let deptValue:string = (<HTMLInputElement>document.getElementById("filterDepartment")).value;
     let locationValue:string = (<HTMLInputElement>document.getElementById("filterLocation")).value;
@@ -386,7 +413,7 @@ export function applyFilters():void {
 }
 
 //adding link to view employees icon
-function addViewEmployeeListner():void {
+function onclickViewEmployee():void {
     document.querySelectorAll(".view-emp").forEach(r => {
         r.addEventListener("click", function ():void {
             let row :HTMLElement= (<HTMLElement>r!.parentElement!.querySelector(".role-name"));
@@ -405,7 +432,7 @@ function addViewEmployeeListner():void {
 }
 
 //edit employee details
-function addListnerToEditIcon():void {
+function onclickEditIcon():void {
     let data :Element[]= Array.from(document.getElementsByClassName("editDetails"));
     data.forEach(ele => {
         ele.addEventListener("click", function (this: HTMLElement):void {
@@ -414,19 +441,19 @@ function addListnerToEditIcon():void {
             (<HTMLButtonElement>document.querySelector(".edit-button")).style.display = "block";
             (<HTMLButtonElement>document.querySelector(".submit-button")).style.display = "none";
             (<HTMLButtonElement>document.querySelector(".save-button")).style.display = "none";
-            let inputRole:HTMLSelectElement = document.getElementById("role-name-input") as HTMLSelectElement;
-            let inputDepartment:HTMLSelectElement = document.getElementById("department-dropdown") as HTMLSelectElement;
-            let inputLocation:HTMLSelectElement = document.getElementById("location-dropdown") as HTMLSelectElement;
+            let inputRole:HTMLSelectElement | null = document.getElementById("role-name-input") as HTMLSelectElement | null;
+            let inputDepartment:HTMLSelectElement | null = document.getElementById("department-dropdown") as HTMLSelectElement | null;
+            let inputLocation:HTMLSelectElement |null= document.getElementById("location-dropdown") as HTMLSelectElement | null;
             let row:HTMLElement= this!.parentElement!.parentElement!;
             let roleName:string = row!.querySelector(".role-name")!.querySelector("span")!.innerText;
             let departmentValue:string = row!.querySelector(".department")!.querySelectorAll("span")[1].innerText;
             let locationValue:string = row!.querySelector(".town")!.querySelectorAll("span")[1].innerText;
-            inputRole.value = roleName;
-            inputDepartment.value = departmentValue;
-            inputLocation.value = locationValue;
-            inputRole.disabled = true;
-            inputDepartment.disabled = true;
-            inputLocation.disabled = true;
+            inputRole?inputRole.value = roleName:null;
+            inputDepartment?inputDepartment.value = departmentValue:null;
+            inputLocation?inputLocation.value = locationValue:null;
+            inputRole?inputRole.disabled = true:null;
+            inputDepartment?inputDepartment.disabled = true:null;
+            inputLocation?inputLocation.disabled = true:null;
             collectUnassignedEmployees("edit");
             (<HTMLElement>document.querySelector(".searchEmployee")).style.pointerEvents = "none";
             (<HTMLTextAreaElement>document.getElementById("description")).disabled = true;
@@ -438,10 +465,10 @@ function addListnerToEditIcon():void {
 //to edit details
 export function editRoleDetails(event: Event):void {
     event.preventDefault();
-    let inputRole:HTMLSelectElement = document.getElementById("role-name-input") as HTMLSelectElement;
-    let inputDepartment:HTMLSelectElement = document.getElementById("department-dropdown") as HTMLSelectElement;
-    let inputLocation:HTMLSelectElement = document.getElementById("location-dropdown") as HTMLSelectElement;
-    inputDepartment.disabled = false;
+    let inputRole:HTMLSelectElement | null= document.getElementById("role-name-input") as HTMLSelectElement | null;
+    let inputDepartment:HTMLSelectElement | null = document.getElementById("department-dropdown") as HTMLSelectElement | null;
+    let inputLocation:HTMLSelectElement | null= document.getElementById("location-dropdown") as HTMLSelectElement | null;
+    inputDepartment?inputDepartment.disabled = false:null;
     (<HTMLTextAreaElement>document.getElementById("description")).disabled = false;
     (<HTMLElement>document.querySelector(".searchEmployee")).style.pointerEvents = "auto";
     (<HTMLButtonElement>document.querySelector(".edit-button")).style.display = "none";
@@ -451,21 +478,21 @@ export function editRoleDetails(event: Event):void {
 
 export function saveRoleDetails(event:Event):void {
     event.preventDefault();
-    let inputRole:HTMLSelectElement = document.getElementById("role-name-input") as HTMLSelectElement;
-    let inputDepartment:HTMLSelectElement = document.getElementById("department-dropdown") as HTMLSelectElement;
-    let inputLocation:HTMLSelectElement = document.getElementById("location-dropdown") as HTMLSelectElement;
+    let inputRole:HTMLSelectElement | null= document.getElementById("role-name-input") as HTMLSelectElement | null;
+    let inputDepartment:HTMLSelectElement | null= document.getElementById("department-dropdown") as HTMLSelectElement | null;
+    let inputLocation:HTMLSelectElement | null = document.getElementById("location-dropdown") as HTMLSelectElement | null;
     roleDetails.forEach(r => {
-        if (r.roleName == inputRole.value) {
-            r.department = inputDepartment.value;
+        if (r.roleName == inputRole?.value) {
+            r.department = <string>inputDepartment?.value;
         }
     })
     let container:HTMLElement = document.getElementById("card-container") as HTMLElement;
     container.innerHTML = " ";
     employee.forEach(r => {
         if (unassignedEmployee.includes(r.empNo)) {
-            r.role = inputRole.value;
+            r.role =<string> inputRole?.value;
         }
-        if (r.role == inputRole.value) {
+        if (r.role == inputRole?.value) {
             if (!unassignedEmployee.includes(r.empNo)) {
                 r.role = "N/A";
             }
@@ -478,20 +505,11 @@ export function saveRoleDetails(event:Event):void {
     (<HTMLElement>document.querySelector(".add-role-form")).style.display = "none";
 }
 
-export function reset():void {
+export function resetFilters():void {
     (<HTMLSelectElement>document.getElementById("filterDepartment")).value = "";
     (<HTMLSelectElement>document.getElementById("filterLocation")).value = "";
     (<HTMLElement>document.querySelector(".role-container")).innerHTML = "";
     createCards(roleDetails);
 }
-
-exports.displayAddRoleForm = displayAddRoleForm;
-exports.submitRoleDetails = submitRoleDetails;
-exports.clearFeilds = clearFeilds;
-exports.applyFilters = applyFilters;
-exports.editRoleDetails = editRoleDetails;
-exports.saveRoleDetails = saveRoleDetails;
-exports.reset = reset;
-exports.showUnassignedEmployees = showUnassignedEmployees;
 
 

@@ -1,22 +1,99 @@
-import { fetchData } from "./common.js";
-import { employee, roleDetails } from "./common.js";
-var exports = document;
+import { fetchData, employee, roleDetails } from "./module.js";
 fetchData();
 createTable(employee);
+var sortingOrders = [];
+var imageData;
+var filter = true;
+var btn = "";
+function addOnClickFunctions() {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+    (_a = document.getElementById("searchBar")) === null || _a === void 0 ? void 0 : _a.addEventListener("keypress", function (event) {
+        displaySearchedName(event);
+    });
+    (_b = document.getElementById("export")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", function () {
+        exportToExcel();
+    });
+    (_c = document.getElementsByClassName("add-employee")[0]) === null || _c === void 0 ? void 0 : _c.addEventListener("click", function () {
+        openEmployeeForm();
+    });
+    (_d = document.getElementsByClassName("sort-icon")[0]) === null || _d === void 0 ? void 0 : _d.addEventListener("click", function () {
+        hideAdvanceFilter();
+    });
+    (_e = document.getElementById("reset-btn")) === null || _e === void 0 ? void 0 : _e.addEventListener("click", function () {
+        resetFilters();
+    });
+    (_f = document.getElementById("apply-btn")) === null || _f === void 0 ? void 0 : _f.addEventListener("click", function () {
+        applyDropDownFilter();
+    });
+    (_g = document.getElementById("delete-btn")) === null || _g === void 0 ? void 0 : _g.addEventListener("click", function () {
+        deleteSelectedEmployeeRows();
+    });
+    (_h = document.getElementById("header-check-box")) === null || _h === void 0 ? void 0 : _h.addEventListener("click", function () {
+        checkAllCheckBoxes();
+    });
+    document.querySelector('[onclick="sortEmployeeTable(1)"]').addEventListener('click', function () {
+        sortEmployeeTable(1);
+    });
+    document.querySelector('[onclick="sortEmployeeTable(2)"]').addEventListener('click', function () {
+        sortEmployeeTable(2);
+    });
+    document.querySelector('[onclick="sortEmployeeTable(3)"]').addEventListener('click', function () {
+        sortEmployeeTable(3);
+    });
+    document.querySelector('[onclick="sortEmployeeTable(4)"]').addEventListener('click', function () {
+        sortEmployeeTable(4);
+    });
+    document.querySelector('[onclick="sortEmployeeTable(5)"]').addEventListener('click', function () {
+        sortEmployeeTable(5);
+    });
+    document.querySelector('[onclick="sortEmployeeTable(6)"]').addEventListener('click', function () {
+        sortEmployeeTable(6);
+    });
+    document.querySelector('[onclick="sortEmployeeTable(2)"]').addEventListener('click', function () {
+        sortEmployeeTable(7);
+    });
+    (_j = document.getElementsByClassName("cancel-button")[0]) === null || _j === void 0 ? void 0 : _j.addEventListener("click", function (event) {
+        clearInputFeilds(event);
+    });
+    (_k = document.getElementsByClassName("submit-button")[0]) === null || _k === void 0 ? void 0 : _k.addEventListener("click", function (event) {
+        formSubmission(event);
+    });
+    (_l = document.getElementsByClassName("edit-button")[0]) === null || _l === void 0 ? void 0 : _l.addEventListener("click", function (event) {
+        editEmployeeDetails(event);
+    });
+    (_m = document.getElementsByClassName("save-button")[0]) === null || _m === void 0 ? void 0 : _m.addEventListener("click", function (event) {
+        saveEmployeeDetails(event);
+    });
+    document.querySelectorAll(".hidden-options").forEach(ele => {
+        ele.addEventListener("click", function () {
+            displayhiddenOptions(this);
+        });
+    });
+    document.querySelectorAll(".check-box").forEach(ele => {
+        ele.addEventListener("change", function () {
+            enableCheckBox();
+        });
+    });
+    document.querySelectorAll(".delete-selected-row").forEach(ele => {
+        ele.addEventListener("click", function () {
+            deleteRow(this);
+        });
+    });
+}
 window.document.addEventListener("DOMContentLoaded", function () {
     var _a;
     var today = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
     (_a = document.getElementsByName("todaysdate")[0]) === null || _a === void 0 ? void 0 : _a.setAttribute('min', today);
     let header = document.querySelector(".header");
-    let headerHeight = header.offsetHeight;
+    let headerHeight = header === null || header === void 0 ? void 0 : header.offsetHeight;
     let description = document.querySelector(".employee-section");
-    let descriptionHeight = description.offsetHeight;
+    let descriptionHeight = description === null || description === void 0 ? void 0 : description.offsetHeight;
     let filter = document.querySelector(".filter-section");
-    let filterHeight = filter.offsetHeight;
+    let filterHeight = filter === null || filter === void 0 ? void 0 : filter.offsetHeight;
     let advanceFilter = document.querySelector(".advance-filter-section");
-    let advanceFilterHeight = advanceFilter.offsetHeight;
+    let advanceFilterHeight = advanceFilter === null || advanceFilter === void 0 ? void 0 : advanceFilter.offsetHeight;
     let deleteSection = document.querySelector(".delete-section");
-    let deleteSectionHeight = deleteSection.offsetHeight;
+    let deleteSectionHeight = deleteSection === null || deleteSection === void 0 ? void 0 : deleteSection.offsetHeight;
     let totalHeight = headerHeight + descriptionHeight + filterHeight + advanceFilterHeight + deleteSectionHeight;
     totalHeight += 52;
     let tableHeight = "calc(100vh - " + totalHeight + "px)";
@@ -26,7 +103,7 @@ window.document.addEventListener("DOMContentLoaded", function () {
 roleDetails.forEach(r => {
     let newOption = new Option(r.roleName, r.roleName);
     let dropDownRole = document.getElementById("roleDropDown");
-    dropDownRole.add(newOption, undefined);
+    dropDownRole === null || dropDownRole === void 0 ? void 0 : dropDownRole.add(newOption, undefined);
 });
 attachListnerToChangeStatus();
 // creating table
@@ -36,7 +113,7 @@ function createTable(data) {
     for (i = 0; i < data.length; i++) {
         let tableRow = document.createElement("tr");
         tableRow.classList.add("row");
-        tableRow.innerHTML += `<td class="details"><input type="checkbox" class="check-box"onclick="enableCheckBox()"></td>
+        tableRow.innerHTML += `<td class="details"><input type="checkbox" class="check-box"></td>
      <td class="details">
      <div class="user-data d-flex">
      <img src=${data[i].employeeImg} alt="profile-icon" />
@@ -65,11 +142,11 @@ function createTable(data) {
         <span class="emp-details font-weight-500">${data[i].dateofJoin}</span>
     </td>
     <td class="details">
-        <div class="hidden-options" onclick="displayhiddenOptions(this)">
+        <div class="hidden-options">
             <img src="../assets/images/dots.png" alt="more-icon" class="more-options">
             <div class="options">
                <div class="edit-employee">View</div>
-               <div onclick="deleteRow(this)" class="delete-selected-row">Delete</div>
+               <div class="delete-selected-row">Delete</div>
                <div class="status-option">Mark as ${data[i].status === 'In-Active' ? 'Active' : 'In-Active'}</div>
             </div>
         </div>
@@ -81,7 +158,8 @@ function createTable(data) {
             document.querySelectorAll("#changeBackGround")[i].classList.add("in-active");
         }
     }
-    addListnerToEditOption();
+    onclickEditOption();
+    addOnClickFunctions();
     document.getElementById("delete-btn").disabled = true;
 }
 //change the status of the employee
@@ -187,7 +265,7 @@ export function saveEmployeeDetails(event) {
     });
     localStorage.setItem('employee', JSON.stringify(employee));
     let tbody = document.getElementById("tableBody");
-    tbody.innerHTML = ' ';
+    tbody ? tbody.innerText = " " : " ";
     applyDropDownFilter();
     if (isInvalid != 1) {
         document.querySelector(".employeetable-container").style.display = "block";
@@ -197,7 +275,7 @@ export function saveEmployeeDetails(event) {
     }
 }
 // edit employee details
-function addListnerToEditOption() {
+function onclickEditOption() {
     document.querySelectorAll(".edit-employee").forEach(emp => {
         emp.addEventListener("click", function () {
             document.querySelector(".employeetable-container").style.display = "none";
@@ -313,13 +391,13 @@ function deleteRow(x) {
     applyDropDownFilter();
 }
 //open form
-var imageData;
 function openEmployeeForm() {
     document.querySelector(".employeetable-container").style.display = "none";
     document.querySelector(".form-container").style.display = "block";
     document.querySelector(".upload-image-btn").disabled = false;
     let imgdisplay = document.getElementById("display-image");
-    imgdisplay.src = "../assets/images/upload-image.png";
+    if (imgdisplay != null)
+        imgdisplay.src = "../assets/images/upload-image.png";
     let formInputs = ["firstName", "lastName", "dateOfBirth", "mailId", "mobileNumber", "dropDownLocation", "DepartmentDropDown", "roleDropDown", "joinDate", "empNo", "assignManager", "assignProject"];
     formInputs.forEach(r => {
         document.getElementById(r).disabled = false;
@@ -336,20 +414,19 @@ function openEmployeeForm() {
     });
 }
 // hiding  and opening the advance filter when we add click on filter icon
-var filter = true;
 function hideAdvanceFilter() {
     const advanceFilter = document.querySelector(".advance-filter-section");
     const table = document.querySelector(".table-container");
     const tableBody = document.querySelector(".table-div");
     if (filter) {
-        advanceFilter.style.display = "none";
-        table.style.height = "350px";
-        tableBody.style.height = "270px";
+        advanceFilter ? advanceFilter.style.display = "none" : null;
+        table ? table.style.height = "350px" : null;
+        tableBody ? tableBody.style.height = "270px" : null;
     }
     else {
-        advanceFilter.style.display = "flex";
-        table.style.height = "292px";
-        tableBody.style.height = "235px";
+        advanceFilter ? advanceFilter.style.display = "flex" : null;
+        table ? table.style.height = "292px" : null;
+        tableBody ? tableBody.style.height = "235px" : null;
     }
     filter = !filter;
 }
@@ -361,7 +438,7 @@ function displaySearchedName(event) {
     }
     else {
         let tbody = document.getElementById("tableBody");
-        tbody.innerHTML = ' ';
+        tbody ? tbody.innerHTML = ' ' : null;
         createTable(employee);
         attachListnerToChangeStatus();
     }
@@ -411,13 +488,12 @@ function searchTable(input) {
         }
     });
     let tbody = document.getElementById("tableBody");
-    tbody.innerHTML = ' ';
+    tbody ? tbody.innerHTML = ' ' : null;
     createTable(arr);
     attachListnerToChangeStatus();
 }
 //  alphabet filter 
 applyalphabetFilter();
-var btn = "";
 function applyalphabetFilter() {
     document.querySelectorAll(".alphabets").forEach(button => {
         button.addEventListener("click", function () {
@@ -427,8 +503,8 @@ function applyalphabetFilter() {
                 if (currentButton.style.background == "rgb(244, 72, 72)") {
                     currentButton.style.background = "rgb(240, 240, 240)";
                     currentButton.style.color = "var(--gray)";
-                    let filteredData = document.getElementById("tableBody");
-                    filteredData.innerHTML = '';
+                    let table = document.getElementById("tableBody");
+                    table ? table.innerHTML = '' : null;
                     createTable(employee);
                     attachListnerToChangeStatus();
                     btn = "";
@@ -446,7 +522,7 @@ function applyalphabetFilter() {
                         return startLetter == char;
                     });
                     let tableBody = document.getElementById("tableBody");
-                    tableBody.innerHTML = '';
+                    tableBody ? tableBody.innerHTML = '' : null;
                     createTable(res);
                     attachListnerToChangeStatus();
                 }
@@ -456,7 +532,7 @@ function applyalphabetFilter() {
                     currentButton.style.background = "rgb(240, 240, 240)";
                     currentButton.style.color = "var(--gray)";
                     let tableBody = document.getElementById("tableBody");
-                    tableBody.innerHTML = '';
+                    tableBody ? tableBody.innerHTML = '' : null;
                     let arr = dropDown(employee, selectedData[0], selectedData[1], selectedData[2]);
                     createTable(arr);
                     attachListnerToChangeStatus();
@@ -465,7 +541,7 @@ function applyalphabetFilter() {
                 else {
                     let arr = dropDown(employee, selectedData[0], selectedData[1], selectedData[2]);
                     let tbody = document.getElementById("tableBody");
-                    tbody.innerHTML = ' ';
+                    tbody ? tbody.innerHTML = ' ' : null;
                     document.querySelectorAll(".alphabets").forEach(bt => {
                         bt.style.background = "rgb(240, 240, 240)";
                         bt.style.color = "var(--gray)";
@@ -478,7 +554,7 @@ function applyalphabetFilter() {
                         return startLetter == char;
                     });
                     let tableData = document.getElementById("tableBody");
-                    tableData.innerHTML = '';
+                    tableData ? tableData.innerHTML = '' : null;
                     createTable(res);
                     attachListnerToChangeStatus();
                 }
@@ -511,7 +587,7 @@ function applyDropDownFilter() {
     }
     let arr = dropDown(data, selectedData[0], selectedData[1], selectedData[2]);
     let tbody = document.getElementById("tableBody");
-    tbody.innerHTML = ' ';
+    tbody ? tbody.innerHTML = ' ' : null;
     createTable(arr);
     attachListnerToChangeStatus();
 }
@@ -555,13 +631,13 @@ function enableCheckBox() {
     let delBtn = document.getElementById("delete-btn");
     checkBox.forEach(a => {
         if (a.checked) {
-            delBtn.style.background = "var(--red-300)";
+            delBtn ? delBtn.style.background = "var(--red-300)" : null;
             document.getElementById("delete-btn").disabled = false;
         }
         else {
             let checkCount = document.querySelectorAll("input[type='checkbox']:checked").length > 0;
             if (!checkCount) {
-                delBtn.style.background = "#F89191";
+                delBtn ? delBtn.style.background = "#F89191" : null;
             }
         }
     });
@@ -583,37 +659,35 @@ function deleteSelectedEmployeeRows() {
             employee.forEach(r => {
                 if (r.empNo == empNo) {
                     employee.splice(count, 1);
-                    console.log(employee);
                 }
                 count++;
             });
             localStorage.setItem('employee', JSON.stringify(employee));
             applyDropDownFilter();
             let delBtn = document.getElementById("delete-btn");
-            delBtn.style.background = "#F89191";
-            document.getElementById("headerCheckBox").checked = false;
+            delBtn ? delBtn.style.background = "#F89191" : null;
+            document.getElementById("header-check-box").checked = false;
         }
     });
 }
 // check all
 function checkAllCheckBoxes() {
-    let mainCheck = document.getElementById("headerCheckBox");
+    let mainCheck = document.getElementById("header-check-box");
     let del = document.getElementById("delete-btn");
     let check = document.querySelectorAll(".check-box");
     check.forEach(a => {
-        a.checked = mainCheck.checked;
+        a.checked = mainCheck ? mainCheck.checked : false;
     });
     let checkCount = document.querySelectorAll("input[type='checkbox']:checked").length > 0;
     if (!checkCount) {
-        del.style.background = "#F89191";
+        del ? del.style.background = "#F89191" : null;
     }
     else {
-        del.style.background = "var(--red-300)";
+        del ? del.style.background = "var(--red-300)" : null;
         document.getElementById("delete-btn").disabled = false;
     }
 }
 // sort the table
-var sortingOrders = [];
 function sortEmployeeTable(n) {
     let tbody = document.getElementById("tableBody");
     let trow = Array.from(document.querySelectorAll(".row"));
@@ -626,9 +700,9 @@ function sortEmployeeTable(n) {
         return sortingOrders[n] === 'asc' ? row1.localeCompare(row2) : row2.localeCompare(row1);
     });
     sortingOrders[n] = sortingOrders[n] === 'asc' ? 'desc' : 'asc';
-    tbody.innerHTML = '';
+    tbody ? tbody.innerHTML = '' : null;
     trow.forEach(r => {
-        tbody.appendChild(r);
+        tbody ? tbody.appendChild(r) : null;
     });
 }
 // form formSubmission
@@ -763,7 +837,7 @@ function clearInputFeilds(event) {
 // reset function
 function resetFilters() {
     let tbody = document.getElementById("tableBody");
-    tbody.innerHTML = ' ';
+    tbody ? tbody.innerHTML = ' ' : null;
     document.querySelectorAll(".alphabets").forEach(btn => {
         btn.style.background = "rgb(240, 240, 240)";
         btn.style.color = "var(--gray)";
@@ -780,40 +854,23 @@ function resetFilters() {
 function exportToExcel() {
     let table = document.getElementById("employeeTable");
     let tableContent = "";
-    let headData = table.querySelectorAll(".table-header");
-    console.log(headData);
-    headData.forEach(r => {
+    let headData = table ? table.querySelectorAll(".table-header") : null;
+    headData ? headData.forEach(r => {
         let cells = r.querySelectorAll("th");
         cells.forEach((ele, index) => {
             tableContent += '"' + (ele.innerText || '').replace(/"/g, '""') + '"' + (index < cells.length - 1 ? ',' : '\n');
         });
-    });
-    let row = table.querySelectorAll(".row");
-    row.forEach(r => {
+    }) : null;
+    let row = table ? table.querySelectorAll(".row") : null;
+    row ? row.forEach(r => {
         let cells = r.querySelectorAll("td");
         cells.forEach((ele, index) => {
             tableContent += '"' + (ele.innerText || '').replace(/"/g, '""') + '"' + (index < cells.length - 1 ? ',' : '\n');
         });
-    });
+    }) : null;
     let tableSheet = 'data:text/csv;charset=utf-8,' + encodeURIComponent(tableContent);
     let downloadlink = document.createElement("a");
     downloadlink.href = tableSheet;
     downloadlink.download = 'employee_data.csv';
     downloadlink.click();
 }
-exports.displayhiddenOptions = displayhiddenOptions;
-exports.editEmployeeDetails = editEmployeeDetails;
-exports.deleteRow = deleteRow;
-exports.openEmployeeForm = openEmployeeForm;
-exports.hideAdvanceFilter = hideAdvanceFilter;
-exports.displaySearchedName = displaySearchedName;
-exports.enableCheckBox = enableCheckBox;
-exports.deleteSelectedEmployeeRows = deleteSelectedEmployeeRows;
-exports.checkAllCheckBoxes = checkAllCheckBoxes;
-exports.sortEmployeeTable = sortEmployeeTable;
-exports.formSubmission = formSubmission;
-exports.clearInputFeilds = clearInputFeilds;
-exports.resetFilters = resetFilters;
-exports.exportToExcel = exportToExcel;
-exports.applyDropDownFilter = applyDropDownFilter;
-exports.saveEmployeeDetails = saveEmployeeDetails;

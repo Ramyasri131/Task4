@@ -98,9 +98,8 @@
                     <p>Install new update 2.3.1A</p>
                     <span>Allow to launch the new update for the AD application</span>
                     <div class="btn-container d-flex">
-                        <button id="dismiss-btn" onclick="closeNotification()"
-                            class="add-cursor-pointer">Dismiss</button>
-                        <button id="accept-btn" onclick="closeNotification()" class="add-cursor-pointer">Accept</button>
+                        <button id="dismiss-btn" class="add-cursor-pointer">Dismiss</button>
+                        <button id="accept-btn" class="add-cursor-pointer">Accept</button>
                     </div>
                 </div>
             </div>
@@ -108,12 +107,11 @@
 
         <div class="main-content">
             <header class="header d-flex">
-                <div> <button type="submit" id="handle-logo" class="add-cursor-pointer" onclick="toggleSideBar()"> <img
+                <div> <button type="submit" id="handle-logo" class="add-cursor-pointer"> <img
                             src="../assets/icons/handle.png" alt="handle" /></button> </div>
                 <div class="search-bar d-flex">
                     <img src="../assets/icons/search.png" alt="search-icon" id="search" />
-                    <input type="text" name="searchbar" placeholder="Search" id="searchBar"
-                        onkeypress="displaySearchedName(event)" />
+                    <input type="text" name="searchbar" placeholder="Search" id="searchBar" />
                     <div class="header-icon d-flex">
                         <img src="../assets/icons/language.svg" alt="lang-logo" />
                         <img src="../assets/icons/categories.svg" alt="category" />
@@ -147,12 +145,12 @@
                         </p>
                     </div>
                     <div class="changes-icon d-flex">
-                        <button class="export add-cursor-pointer" onclick="exportToExcel()">
+                        <button class="export add-cursor-pointer" id="export">
                             <img src="../assets/icons/export.svg" alt="export-icon" id="export-icon" />
                             <span>EXPORT</span>
                         </button>
 
-                        <button class="add-employee add-cursor-pointer" onclick="openEmployeeForm()">
+                        <button class="add-employee add-cursor-pointer">
                             <img src="../assets/icons/add.svg" alt="export-icon" id="export-icon" />
                             <span>ADD EMPLOYEE</span>
                         </button>
@@ -161,7 +159,7 @@
                     </div>
                 </div>
                 <div class="filter-section d-flex">
-                    <div class="sort-icon add-cursor-pointer" onclick="hideAdvanceFilter()">
+                    <div class="sort-icon add-cursor-pointer">
                         <img src="../assets/icons/filter.svg" alt="filter-icon" />
                     </div>
                     <div class="btn-section d-flex">
@@ -224,9 +222,9 @@
                         </div>
                     </div>
                     <div class="order-btn d-flex">
-                        <div><button id="reset-btn" class="add-cursor-pointer" onclick="resetFilters()">Reset</button>
+                        <div><button id="reset-btn" class="add-cursor-pointer">Reset</button>
                         </div>
-                        <div><button id="apply-btn" class="add-cursor-pointer" onclick="applyDropDownFilter()">Apply
+                        <div><button id="apply-btn" class="add-cursor-pointer">Apply
                             </button></div>
                     </div>
                 </div>
@@ -237,8 +235,7 @@
                         <div class="delete-section-left d-flex">
                             <img src="../assets/icons/arrow-turn-left-down.svg" alt="turn left down"
                                 id="image-turn-left-down" class="add-cursor-pointer" />
-                            <button id="delete-btn" class="add-cursor-pointer"
-                                onclick="deleteSelectedEmployeeRows()">Delete</button>
+                            <button id="delete-btn" class="add-cursor-pointer">Delete</button>
                         </div>
 
                         <div class="delete-section-right d-flex">
@@ -250,7 +247,7 @@
                             <thead class="t-head">
                                 <tr class="table-header">
                                     <th>
-                                        <input type="checkbox" id="headerCheckBox" onclick="checkAllCheckBoxes()">
+                                        <input type="checkbox" id="header-check-box">
                                     </th>
                                     <th onclick="sortEmployeeTable(1)">
                                         <div class="table-heading add-cursor-pointer d-flex">
@@ -330,20 +327,17 @@
                             <div class="row-display employee-input d-flex">
                                 <div class="form-heading">
                                     <label for="firstName">First Name</label>
-                                    <input type="text" placeholder="Text" class="user-input"
-                                        id="firstName" />
+                                    <input type="text" placeholder="Text" class="user-input" id="firstName" />
                                     <p id="validFirstName"></p>
                                 </div>
                                 <div class="form-heading">
                                     <label for="lastName">Last Name</label>
-                                    <input type="text" placeholder="Text" class="user-input "
-                                        id="lastName" />
+                                    <input type="text" placeholder="Text" class="user-input " id="lastName" />
                                     <p id="validLastName"></p>
                                 </div>
                                 <div class="form-heading">
                                     <label for="dateOfBirth">Date of Birth</label>
-                                    <input type="date" placeholder="Text" class="user-input  "
-                                        id="dateOfBirth" />
+                                    <input type="date" placeholder="Text" class="user-input  " id="dateOfBirth" />
                                     <p id="date-of-birth"></p>
                                 </div>
                             </div>
@@ -356,8 +350,8 @@
                                 </div>
                                 <div class="form-heading">
                                     <label for="mobileNumber">Mobile Number</label>
-                                    <input type="number" placeholder="0000000000" class="user-input"
-                                        id="mobileNumber" pattern="[0-9]{10}" />
+                                    <input type="number" placeholder="0000000000" class="user-input" id="mobileNumber"
+                                        pattern="[0-9]{10}" />
                                     <p id="phone-number"></p>
                                 </div>
                             </div>
@@ -430,20 +424,16 @@
                             </div>
                         </div>
                         <div class="form-buttons d-flex">
-                            <button type="button" class="cancel-button add-cursor-pointer"
-                                onclick="clearInputFeilds(event)">
+                            <button type="button" class="cancel-button add-cursor-pointer">
                                 cancel
                             </button>
-                            <button type="submit" class="submit-button add-cursor-pointer"
-                                onclick="formSubmission(event)">
+                            <button type="submit" class="submit-button add-cursor-pointer">
                                 Add Employee
                             </button>
-                            <button type="submit" class="edit-button add-cursor-pointer"
-                                onclick="editEmployeeDetails(event)">
+                            <button type="submit" class="edit-button add-cursor-pointer">
                                 Edit
                             </button>
-                            <button type="submit" class="save-button add-cursor-pointer"
-                                onclick="saveEmployeeDetails(event)">
+                            <button type="submit" class="save-button add-cursor-pointer">
                                 Save
                             </button>
                         </div>

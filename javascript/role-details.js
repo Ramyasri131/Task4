@@ -1,7 +1,24 @@
-import { fetchData, role } from "./common.js";
-import { employee, roleDetails } from "./common.js";
-var exports = document;
+var _a, _b;
+import { fetchData, role, employee, roleDetails } from "./module.js";
 fetchData();
+var unassignedEmployee = [];
+var visible = false;
+collectUnassignedEmployees();
+document.getElementsByClassName("add-employee-btn")[0].addEventListener("click", function () {
+    openAddEmployeeForm();
+});
+(_a = document.getElementById("search-emp")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () {
+    showUnassignedEmployees();
+});
+document.getElementsByClassName("cancel-button")[0].addEventListener("click", function () {
+    closeAddEmployeeForm();
+});
+document.getElementsByClassName("save-button")[0].addEventListener("click", function () {
+    addRoleFormEmployee();
+});
+(_b = document.getElementById("view-cancel-button")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", function () {
+    closeAddRoleForm();
+});
 document.querySelector(".add-employee-role-name").innerText = role.roleName;
 createEmployeeDetailsCards();
 createDescripton();
@@ -25,7 +42,6 @@ function createEmployeeDetailsCards() {
             employeeDetails.classList.add("employee-card-details", "d-flex");
             let employeeImg = document.createElement("img");
             employeeImg.src = ele.employeeImg;
-            employeeDetails.appendChild(employeeImg);
             let employeeName = document.createElement("div");
             employeeName.classList.add("employee-name", "d-flex");
             let nameOfEmployee = document.createElement("span");
@@ -33,46 +49,40 @@ function createEmployeeDetailsCards() {
             nameOfEmployee.innerText = ele.Name;
             let roleOfEmployee = document.createElement("span");
             roleOfEmployee.innerText = ele.role;
-            employeeName.appendChild(nameOfEmployee);
-            employeeName.appendChild(roleOfEmployee);
-            employeeDetails.appendChild(employeeName);
+            let empdetails = [];
+            empdetails = [nameOfEmployee, roleOfEmployee];
+            empdetails.forEach(ele => {
+                employeeName.appendChild(ele);
+            });
             let IdOfEmployee = document.createElement("div");
             IdOfEmployee.classList.add("employee-information", "d-flex");
             let idImage = document.createElement("img");
             idImage.src = "../assets/icons/emp-id.svg";
             let idNo = document.createElement("span");
             idNo.innerText = ele.empNo;
-            IdOfEmployee.appendChild(idImage);
-            IdOfEmployee.appendChild(idNo);
             let emailOfEmployee = document.createElement("div");
             emailOfEmployee.classList.add("employee-information", "d-flex");
             let emailImage = document.createElement("img");
             emailImage.src = "../assets/icons/email-icon.svg";
             let emailId = document.createElement("span");
             emailId.innerText = ele.mailId;
-            emailOfEmployee.appendChild(emailImage);
-            emailOfEmployee.appendChild(emailId);
             let deptOfEmployee = document.createElement("div");
             deptOfEmployee.classList.add("employee-information", "d-flex");
             let deptImage = document.createElement("img");
             deptImage.src = "../assets/icons/team.svg";
             let deptId = document.createElement("span");
             deptId.innerText = ele.department;
-            deptOfEmployee.appendChild(deptImage);
-            deptOfEmployee.appendChild(deptId);
             let locationOfEmployee = document.createElement("div");
             locationOfEmployee.classList.add("employee-information", "d-flex");
             let locationImage = document.createElement("img");
             locationImage.src = "../assets/icons/location.svg";
             let locationName = document.createElement("span");
             locationName.innerText = ele.location;
-            locationOfEmployee.appendChild(locationImage);
-            locationOfEmployee.appendChild(locationName);
-            cardContent.appendChild(employeeDetails);
-            cardContent.appendChild(IdOfEmployee);
-            cardContent.appendChild(emailOfEmployee);
-            cardContent.appendChild(deptOfEmployee);
-            cardContent.appendChild(locationOfEmployee);
+            let empCardDetails = [];
+            empCardDetails = [employeeDetails, IdOfEmployee, emailOfEmployee, deptOfEmployee, locationOfEmployee];
+            empCardDetails.forEach(ele => {
+                cardContent.appendChild(ele);
+            });
             let view = document.createElement("div");
             view.classList.add("view");
             view.classList.add("d-flex");
@@ -80,11 +90,14 @@ function createEmployeeDetailsCards() {
             heading.innerText = "View";
             let arrowImg = document.createElement("img");
             arrowImg.src = "../assets/icons/view.png";
-            view.appendChild(heading);
-            view.appendChild(arrowImg);
-            detailsCard.appendChild(cardContent);
-            detailsCard.appendChild(view);
-            roleCardContainer.appendChild(detailsCard);
+            let parent = [employeeDetails, IdOfEmployee, emailOfEmployee, deptOfEmployee, locationOfEmployee, view, detailsCard];
+            let child = [[employeeImg, employeeName], [idImage, idNo], [emailImage, emailId], [deptImage, deptId], [locationImage, locationName], [heading, arrowImg], [cardContent, view]];
+            for (let p = 0; p < (parent === null || parent === void 0 ? void 0 : parent.length); p++) {
+                for (let c = 0; c < child[p].length; c++) {
+                    parent[p].appendChild(child[p][c]);
+                }
+            }
+            roleCardContainer === null || roleCardContainer === void 0 ? void 0 : roleCardContainer.appendChild(detailsCard);
             count += 1;
         }
     });
@@ -93,13 +106,13 @@ function createEmployeeDetailsCards() {
         let detailsCard = document.createElement("div");
         detailsCard.classList.add("details-card");
         detailsCard.innerText = "No Employees assigned for this role";
-        roleCardContainer.appendChild(detailsCard);
+        roleCardContainer ? roleCardContainer.appendChild(detailsCard) : null;
     }
-    addListnerToViewIcon();
+    viewOnClick();
 }
 //open add employee form 
 export function openAddEmployeeForm() {
-    editRoleDetails();
+    displayRoleDetails();
     document.querySelector(".view-employees").style.display = "none";
     document.querySelector(".add-role-form").style.display = "block";
     document.querySelector(".form-container").style.display = "none";
@@ -109,21 +122,19 @@ export function closeAddEmployeeForm() {
     document.querySelector(".add-role-form").style.display = "none";
     document.querySelector(".form-container").style.display = "none";
 }
-export function editRoleDetails() {
+export function displayRoleDetails() {
     let inputRole = document.getElementById("role-name-input");
     let inputDepartment = document.getElementById("department-dropdown");
     let inputLocation = document.getElementById("location-dropdown");
-    inputRole.value = role.roleName;
-    inputLocation.value = role.cityName;
-    inputDepartment.disabled = true;
-    inputRole.disabled = true;
-    inputLocation.disabled = true;
+    inputRole ? inputRole.value = role.roleName : null;
+    inputLocation ? inputLocation.value = role.cityName : null;
+    inputDepartment ? inputDepartment.disabled = true : null;
+    inputRole ? inputRole.disabled = true : null;
+    inputLocation ? inputLocation.disabled = true : null;
     document.getElementById("description").disabled = true;
     document.querySelector(".searchEmployee").style.pointerEvents = "auto";
     document.querySelector(".save-button").style.display = "block";
 }
-collectUnassignedEmployees();
-var unassignedEmployee = [];
 function collectUnassignedEmployees() {
     document.getElementById("assign-employee-section").innerHTML = "";
     document.getElementById("location-dropdown").value;
@@ -157,7 +168,6 @@ function collectUnassignedEmployees() {
         }
     });
 }
-var visible = false;
 export function showUnassignedEmployees() {
     if (visible) {
         closeUnassignedEmployees();
@@ -186,7 +196,7 @@ export function addRoleFormEmployee() {
     let inputRole = document.getElementById("role-name-input");
     employee.forEach(r => {
         if (unassignedEmployee.includes(r.empNo)) {
-            r.role = inputRole.value;
+            r.role = inputRole === null || inputRole === void 0 ? void 0 : inputRole.value;
         }
     });
     localStorage.setItem('employee', JSON.stringify(employee));
@@ -199,7 +209,7 @@ document.addEventListener("click", (event) => {
         }
     }
 });
-function addListnerToViewIcon() {
+function viewOnClick() {
     document.querySelectorAll(".view").forEach(emp => {
         emp.addEventListener("click", function () {
             document.querySelector(".view-employees").style.display = "none";
@@ -255,13 +265,8 @@ function disableInputFields(ele, val) {
     ele.value = val;
     ele.disabled = true;
 }
-function closeForm() {
+function closeAddRoleForm() {
     document.querySelector(".view-employees").style.display = "block";
     document.querySelector(".add-role-form").style.display = "none";
     document.querySelector(".form-container").style.display = "none";
 }
-exports.closeForm = closeForm;
-exports.openAddEmployeeForm = openAddEmployeeForm;
-exports.closeAddEmployeeForm = closeAddEmployeeForm;
-exports.showUnassignedEmployees = showUnassignedEmployees;
-exports.addRoleFormEmployee = addRoleFormEmployee;

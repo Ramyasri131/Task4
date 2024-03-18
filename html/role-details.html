@@ -95,8 +95,8 @@
                     <p>Install new update 2.3.1A</p>
                     <span>Allow to launch the new update for the AD application</span>
                     <div class="btn-container d-flex">
-                        <button id="dismiss-btn" onclick="closeNotification()">Dismiss</button>
-                        <button id="accept-btn" onclick="closeNotification()">Accept</button>
+                        <button id="dismiss-btn">Dismiss</button>
+                        <button id="accept-btn">Accept</button>
                     </div>
                 </div>
             </div>
@@ -107,7 +107,7 @@
 
             <!--header starts here-->
             <header class="header d-flex">
-                <div> <button type="submit" id="handle-logo" onclick="toggleSideBar()" class="add-cursor-pointer"> <img
+                <div> <button type="submit" id="handle-logo" class="add-cursor-pointer"> <img
                             src="../assets/icons/handle.png" alt="handle" /></button> </div>
 
                 <div class="search-bar d-flex">
@@ -155,7 +155,7 @@
                         <div class="all-roles">All the roles are configured here</div>
 
                     </div>
-                    <button class="add-employee-btn add-cursor-pointer d-flex" onclick="openAddEmployeeForm()">
+                    <button class="add-employee-btn add-cursor-pointer d-flex">
                         <img src="../assets/icons/add.svg" alt="export-icon" id="export-icon" />
                         <span>ADD EMPLOYEE</span>
                     </button>
@@ -218,7 +218,7 @@
                         <div class="details d-flex">
                             <div class="employee-details d-flex">
                                 <label for="searchEmployee">Assign Employees</label>
-                                <div class="searchEmployee" onclick="showUnassignedEmployees()">
+                                <div class="searchEmployee" id="search-emp">
                                     Search for an Employee
                                     <img src="../assets/icons/down-arrow.png" alt="down-arrow"
                                         class="add-role-downarrow" />
@@ -229,10 +229,10 @@
                         </div>
                     </div>
                     <div class="form-buttons d-flex">
-                        <button type="button" class="cancel-button add-cursor-pointer" onclick="closeAddEmployeeForm()">
+                        <button type="button" class="cancel-button add-cursor-pointer">
                             cancel
                         </button>
-                        <button type="submit" class="save-button add-cursor-pointer" onclick="addRoleFormEmployee()">
+                        <button type="submit" class="save-button add-cursor-pointer">
                             Save
                         </button>
                     </div>
@@ -363,7 +363,7 @@
                         </div>
                         <div class="form-buttons d-flex">
                             <div class="form-buttons">
-                                <button type="button" class="cancel-button" onclick="closeForm()">
+                                <button type="button" class="cancel-button" id="view-cancel-button">
                                     cancel
                                 </button>
                             </div>

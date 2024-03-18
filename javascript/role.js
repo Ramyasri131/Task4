@@ -1,8 +1,34 @@
-import { fetchData } from "./common.js";
-import { employee, roleDetails } from "./common.js";
-var exports = document;
+var _a, _b, _c, _d, _e, _f, _g;
+import { fetchData, employee, roleDetails } from "./module.js";
 fetchData();
 createCards(roleDetails);
+var unassignedEmployee = [];
+var visible = false;
+var selectedOptions = ["", ""];
+document.getElementsByClassName("add-role")[0].addEventListener("click", function () {
+    displayAddRoleForm();
+});
+(_a = document.getElementById("reset")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () {
+    resetFilters();
+});
+(_b = document.getElementById("apply")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", function () {
+    applyFilters();
+});
+(_c = document.getElementById("search-emp")) === null || _c === void 0 ? void 0 : _c.addEventListener("click", function () {
+    showUnassignedEmployees();
+});
+(_d = document.getElementsByClassName("cancel-button")[0]) === null || _d === void 0 ? void 0 : _d.addEventListener("click", function () {
+    clearFeilds();
+});
+(_e = document.getElementsByClassName("submit-button")[0]) === null || _e === void 0 ? void 0 : _e.addEventListener("click", function (event) {
+    submitRoleDetails(event);
+});
+(_f = document.getElementsByClassName("edit-button")[0]) === null || _f === void 0 ? void 0 : _f.addEventListener("click", function (event) {
+    editRoleDetails(event);
+});
+(_g = document.getElementsByClassName("save-button")[0]) === null || _g === void 0 ? void 0 : _g.addEventListener("click", function (event) {
+    saveRoleDetails(event);
+});
 document.addEventListener("click", (event) => {
     let target = event.target;
     if (target.className != "asssign-employees-container" && target.className != "searchEmployee" && target.className != "assign-employee" && target.className != "assign-employee-details" && target.className != "check-employee" && target.className != "employee-check-box") {
@@ -21,13 +47,13 @@ export function displayAddRoleForm() {
     let inputRole = document.getElementById("role-name-input");
     let inputDepartment = document.getElementById("department-dropdown");
     let inputLocation = document.getElementById("location-dropdown");
-    inputDepartment.value = "";
-    inputLocation.value = "";
-    inputRole.value = "";
+    inputDepartment ? inputDepartment.value = "" : null;
+    inputLocation ? inputLocation.value = "" : null;
+    inputRole ? inputRole.value = "" : null;
     document.getElementById("description").value = "";
-    inputRole.disabled = false;
-    inputDepartment.disabled = false;
-    inputLocation.disabled = false;
+    inputRole ? inputRole.disabled = false : null;
+    inputDepartment ? inputDepartment.disabled = false : null;
+    inputLocation ? inputLocation.disabled = false : null;
     document.getElementById("description").disabled = false;
 }
 //show unassigned employess when click on assign employees
@@ -37,7 +63,6 @@ function getLocationBasedEmployees() {
 document.getElementById("location-dropdown").addEventListener("change", function () {
     getLocationBasedEmployees();
 });
-var unassignedEmployee = [];
 function collectUnassignedEmployees(pageType) {
     document.getElementById("assign-employee-section").innerHTML = "";
     let inputLocation = document.getElementById("location-dropdown").value;
@@ -104,7 +129,6 @@ function collectUnassignedEmployees(pageType) {
         });
     }
 }
-var visible = false;
 export function showUnassignedEmployees() {
     if (visible) {
         closeUnassignedEmployees();
@@ -137,28 +161,28 @@ export function submitRoleDetails(event) {
     let inputLocation = document.getElementById("location-dropdown");
     let inputDescription = document.getElementById("description");
     let isInvalid = 0;
-    if (inputRole.value == "") {
+    if ((inputRole === null || inputRole === void 0 ? void 0 : inputRole.value) == "") {
         inputRole.classList.add("alert");
         document.getElementById("valid-role").innerText = "This field is required";
         document.getElementById("valid-role").classList.add("error");
         isInvalid = 1;
     }
-    if (inputDepartment.value == "") {
+    if ((inputDepartment === null || inputDepartment === void 0 ? void 0 : inputDepartment.value) == "") {
         inputDepartment.classList.add("alert");
         document.getElementById("valid-dept").innerText = "This field is required";
         document.getElementById("valid-dept").classList.add("error");
         isInvalid = 1;
     }
-    if (inputLocation.value == "") {
+    if ((inputLocation === null || inputLocation === void 0 ? void 0 : inputLocation.value) == "") {
         inputLocation.classList.add("alert");
         document.getElementById("valid-city").innerText = "This field is required";
         document.getElementById("valid-city").classList.add("error");
         isInvalid = 1;
     }
     roleDetails.forEach(r => {
-        if (r.location == inputLocation.value) {
-            if (r.roleName == inputRole.value) {
-                inputRole.classList.add("alert");
+        if (r.location == (inputLocation === null || inputLocation === void 0 ? void 0 : inputLocation.value)) {
+            if (r.roleName == (inputRole === null || inputRole === void 0 ? void 0 : inputRole.value)) {
+                inputRole === null || inputRole === void 0 ? void 0 : inputRole.classList.add("alert");
                 document.getElementById("valid-role").innerText = "Role already exists";
                 document.getElementById("valid-role").classList.add("error");
                 isInvalid = 1;
@@ -166,10 +190,10 @@ export function submitRoleDetails(event) {
         }
     });
     if (isInvalid == 0) {
-        let roleName = inputRole.value;
-        let department = inputDepartment.value;
-        let location = inputLocation.value;
-        let description = inputDescription.value;
+        let roleName = inputRole === null || inputRole === void 0 ? void 0 : inputRole.value;
+        let department = inputDepartment === null || inputDepartment === void 0 ? void 0 : inputDepartment.value;
+        let location = inputLocation === null || inputLocation === void 0 ? void 0 : inputLocation.value;
+        let description = inputDescription === null || inputDescription === void 0 ? void 0 : inputDescription.value;
         let arr = { roleName, department, location, description };
         roleDetails.push(arr);
         let container = document.getElementById("card-container");
@@ -182,13 +206,13 @@ export function submitRoleDetails(event) {
         localStorage.setItem('employee', JSON.stringify(employee));
         localStorage.setItem('roleDetails', JSON.stringify(roleDetails));
         createCards(roleDetails);
-        inputLocation.classList.remove("alert");
+        inputLocation === null || inputLocation === void 0 ? void 0 : inputLocation.classList.remove("alert");
         document.getElementById("valid-city").innerText = "";
         document.getElementById("valid-city").classList.remove("error");
-        inputDepartment.classList.remove("alert");
+        inputDepartment === null || inputDepartment === void 0 ? void 0 : inputDepartment.classList.remove("alert");
         document.getElementById("valid-dept").innerText = "";
         document.getElementById("valid-dept").classList.remove("error");
-        inputRole.classList.remove("alert");
+        inputRole === null || inputRole === void 0 ? void 0 : inputRole.classList.remove("alert");
         document.getElementById("valid-role").innerText = "";
         document.getElementById("valid-role").classList.remove("error");
         document.querySelectorAll(".assign-employee").forEach(r => {
@@ -203,21 +227,21 @@ export function clearFeilds() {
     let inputRole = document.getElementById("role-name-input");
     let inputDepartment = document.getElementById("department-dropdown");
     let inputLocation = document.getElementById("location-dropdown");
-    inputRole.value = "";
-    let inputs = [inputRole, inputDepartment, inputLocation];
-    inputs.forEach(ele => {
-        ele.classList.remove("alert");
-    });
+    inputRole ? inputRole.value = "" : null;
+    let inputs = [inputRole ? inputRole : null, inputDepartment ? inputDepartment : null, inputLocation ? inputLocation : null];
+    inputs ? inputs.forEach(ele => {
+        ele === null || ele === void 0 ? void 0 : ele.classList.remove("alert");
+    }) : null;
     let vaildMsg = ["valid-city", "valid-dept", "valid-role"];
     vaildMsg.forEach(ele => {
         document.getElementById(ele).innerText = "";
         document.getElementById(ele).classList.remove("error");
     });
     document.getElementById("assign-employee-section").style.display = "none";
-    inputDepartment.value = "";
-    inputLocation.value = "";
-    inputRole.disabled = false;
-    inputDepartment.disabled = false;
+    inputDepartment ? inputDepartment.value = "" : null;
+    inputLocation ? inputLocation.value = "" : null;
+    inputRole ? inputRole.disabled = false : null;
+    inputDepartment ? inputDepartment.disabled = false : null;
     document.querySelectorAll(".assign-employee").forEach(r => {
         document.querySelector(".asssign-employees-container").removeChild(r);
     });
@@ -330,10 +354,9 @@ function createCards(roleDetails) {
         division.appendChild(link);
         container.appendChild(division);
     });
-    addViewEmployeeListner();
-    addListnerToEditIcon();
+    onclickViewEmployee();
+    onclickEditIcon();
 }
-var selectedOptions = ["", ""];
 function getSelectedOptions() {
     let deptValue = document.getElementById("filterDepartment").value;
     let locationValue = document.getElementById("filterLocation").value;
@@ -358,7 +381,7 @@ export function applyFilters() {
     }
 }
 //adding link to view employees icon
-function addViewEmployeeListner() {
+function onclickViewEmployee() {
     document.querySelectorAll(".view-emp").forEach(r => {
         r.addEventListener("click", function () {
             let row = r.parentElement.querySelector(".role-name");
@@ -376,7 +399,7 @@ function addViewEmployeeListner() {
     });
 }
 //edit employee details
-function addListnerToEditIcon() {
+function onclickEditIcon() {
     let data = Array.from(document.getElementsByClassName("editDetails"));
     data.forEach(ele => {
         ele.addEventListener("click", function () {
@@ -392,12 +415,12 @@ function addListnerToEditIcon() {
             let roleName = row.querySelector(".role-name").querySelector("span").innerText;
             let departmentValue = row.querySelector(".department").querySelectorAll("span")[1].innerText;
             let locationValue = row.querySelector(".town").querySelectorAll("span")[1].innerText;
-            inputRole.value = roleName;
-            inputDepartment.value = departmentValue;
-            inputLocation.value = locationValue;
-            inputRole.disabled = true;
-            inputDepartment.disabled = true;
-            inputLocation.disabled = true;
+            inputRole ? inputRole.value = roleName : null;
+            inputDepartment ? inputDepartment.value = departmentValue : null;
+            inputLocation ? inputLocation.value = locationValue : null;
+            inputRole ? inputRole.disabled = true : null;
+            inputDepartment ? inputDepartment.disabled = true : null;
+            inputLocation ? inputLocation.disabled = true : null;
             collectUnassignedEmployees("edit");
             document.querySelector(".searchEmployee").style.pointerEvents = "none";
             document.getElementById("description").disabled = true;
@@ -410,7 +433,7 @@ export function editRoleDetails(event) {
     let inputRole = document.getElementById("role-name-input");
     let inputDepartment = document.getElementById("department-dropdown");
     let inputLocation = document.getElementById("location-dropdown");
-    inputDepartment.disabled = false;
+    inputDepartment ? inputDepartment.disabled = false : null;
     document.getElementById("description").disabled = false;
     document.querySelector(".searchEmployee").style.pointerEvents = "auto";
     document.querySelector(".edit-button").style.display = "none";
@@ -423,17 +446,17 @@ export function saveRoleDetails(event) {
     let inputDepartment = document.getElementById("department-dropdown");
     let inputLocation = document.getElementById("location-dropdown");
     roleDetails.forEach(r => {
-        if (r.roleName == inputRole.value) {
-            r.department = inputDepartment.value;
+        if (r.roleName == (inputRole === null || inputRole === void 0 ? void 0 : inputRole.value)) {
+            r.department = inputDepartment === null || inputDepartment === void 0 ? void 0 : inputDepartment.value;
         }
     });
     let container = document.getElementById("card-container");
     container.innerHTML = " ";
     employee.forEach(r => {
         if (unassignedEmployee.includes(r.empNo)) {
-            r.role = inputRole.value;
+            r.role = inputRole === null || inputRole === void 0 ? void 0 : inputRole.value;
         }
-        if (r.role == inputRole.value) {
+        if (r.role == (inputRole === null || inputRole === void 0 ? void 0 : inputRole.value)) {
             if (!unassignedEmployee.includes(r.empNo)) {
                 r.role = "N/A";
             }
@@ -445,17 +468,9 @@ export function saveRoleDetails(event) {
     document.querySelector(".add-role-page").style.display = "block";
     document.querySelector(".add-role-form").style.display = "none";
 }
-export function reset() {
+export function resetFilters() {
     document.getElementById("filterDepartment").value = "";
     document.getElementById("filterLocation").value = "";
     document.querySelector(".role-container").innerHTML = "";
     createCards(roleDetails);
 }
-exports.displayAddRoleForm = displayAddRoleForm;
-exports.submitRoleDetails = submitRoleDetails;
-exports.clearFeilds = clearFeilds;
-exports.applyFilters = applyFilters;
-exports.editRoleDetails = editRoleDetails;
-exports.saveRoleDetails = saveRoleDetails;
-exports.reset = reset;
-exports.showUnassignedEmployees = showUnassignedEmployees;

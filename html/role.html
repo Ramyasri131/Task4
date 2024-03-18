@@ -66,8 +66,8 @@
                     <p id="role-heading">ROLE / USER MANAGEMENT</p>
                     <a href="role.html" title="Roles" class="links">
                         <div class="roles d-flex">
-                            <div class="role-navigation d-flex"><img src="../assets/icons/roles-icon.png" alt="roles-icon"
-                                    class="role-icon" />
+                            <div class="role-navigation d-flex"><img src="../assets/icons/roles-icon.png"
+                                    alt="roles-icon" class="role-icon" />
                                 <span>Roles</span>
                             </div>
                             <img src="../assets/icons/red-arrow.png" id="right-arrow" alt="right-arrow" />
@@ -94,8 +94,8 @@
                     <p>Install new update 2.3.1A</p>
                     <span>Allow to launch the new update for the AD application</span>
                     <div class="btn-container d-flex">
-                        <button id="dismiss-btn" onclick="closeNotification()">Dismiss</button>
-                        <button id="accept-btn" onclick="closeNotification()">Accept</button>
+                        <button id="dismiss-btn">Dismiss</button>
+                        <button id="accept-btn">Accept</button>
                     </div>
                 </div>
             </div>
@@ -105,7 +105,7 @@
             <!-- header part -->
 
             <header class="header d-flex">
-                <div> <button type="submit" id="handle-logo" onclick="toggleSideBar()" class="add-cursor-pointer"> <img
+                <div> <button type="submit" id="handle-logo" class="add-cursor-pointer"> <img
                             src="../assets/icons/handle.png" alt="handle" /></button> </div>
                 <div class="search-bar d-flex">
                     <img src="../assets/icons/search.png" alt="search-icon" id="search" />
@@ -138,7 +138,7 @@
                         <span>Roles</span>
                         <span class="text-color">All the roles are configured here</span>
                     </div>
-                    <button class="add-role add-cursor-pointer d-flex" onclick="displayAddRoleForm()">
+                    <button class="add-role add-cursor-pointer d-flex">
                         <img src="../assets/icons/add.svg" alt="add" id="add" />
                         <span>Add Role</span>
                     </button>
@@ -168,8 +168,8 @@
                         </div>
                     </div>
                     <div class="order-btn d-flex">
-                        <div><button id="reset" class="add-cursor-pointer" onclick="reset()">Reset</button></div>
-                        <div><button id="apply" class="add-cursor-pointer" onclick="applyFilters()">Apply</button></div>
+                        <div><button id="reset" class="add-cursor-pointer">Reset</button></div>
+                        <div><button id="apply" class="add-cursor-pointer">Apply</button></div>
                     </div>
                 </div>
 
@@ -223,7 +223,7 @@
                         <div class="details">
                             <div class="employee-details d-flex">
                                 <label for="searchEmployee">Assign Employees</label>
-                                <div class="searchEmployee" onclick="showUnassignedEmployees()">
+                                <div class="searchEmployee" id="search-emp">
                                     Search for an Employee
                                     <img src="../assets/icons/down-arrow.png" alt="down-arrow"
                                         class="add-role-downarrow" />
@@ -234,17 +234,16 @@
                         </div>
                     </div>
                     <div class="form-buttons d-flex">
-                        <button type="button" class="cancel-button add-cursor-pointer" onclick="clearFeilds()">
+                        <button type="button" class="cancel-button add-cursor-pointer">
                             cancel
                         </button>
-                        <button type="submit" class="submit-button add-cursor-pointer"
-                            onclick="submitRoleDetails(event)">
+                        <button type="submit" class="submit-button add-cursor-pointer">
                             Add Role
                         </button>
-                        <button type="submit" class="edit-button add-cursor-pointer" onclick="editRoleDetails(event)">
+                        <button type="submit" class="edit-button add-cursor-pointer">
                             Edit
                         </button>
-                        <button type="submit" class="save-button add-cursor-pointer" onclick="saveRoleDetails(event)">
+                        <button type="submit" class="save-button add-cursor-pointer">
                             Save
                         </button>
                     </div>
