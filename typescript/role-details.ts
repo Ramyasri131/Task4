@@ -116,9 +116,9 @@ function createEmployeeDetailsCards(): void {
             let arrowImg = document.createElement("img");
             arrowImg.src = "../assets/icons/view.png";
 
-            let parent=[employeeDetails,IdOfEmployee,emailOfEmployee,deptOfEmployee,locationOfEmployee, view,detailsCard];
+            let parent: HTMLElement[] =[employeeDetails,IdOfEmployee,emailOfEmployee,deptOfEmployee,locationOfEmployee, view,detailsCard];
 
-            let child=[[employeeImg,employeeName],[idImage,idNo],[emailImage,emailId],[deptImage,deptId],[locationImage,locationName],[heading,arrowImg],[cardContent,view]];
+            let child:HTMLElement[][] =[[employeeImg,employeeName],[idImage,idNo],[emailImage,emailId],[deptImage,deptId],[locationImage,locationName],[heading,arrowImg],[cardContent,view]];
 
             for(let p=0;p< parent?.length;p++)
             {
