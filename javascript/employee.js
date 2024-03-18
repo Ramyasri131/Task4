@@ -49,7 +49,7 @@ function addOnClickFunctions() {
     document.querySelector('[onclick="sortEmployeeTable(6)"]').addEventListener('click', function () {
         sortEmployeeTable(6);
     });
-    document.querySelector('[onclick="sortEmployeeTable(2)"]').addEventListener('click', function () {
+    document.querySelector('[onclick="sortEmployeeTable(7)"]').addEventListener('click', function () {
         sortEmployeeTable(7);
     });
     (_j = document.getElementsByClassName("cancel-button")[0]) === null || _j === void 0 ? void 0 : _j.addEventListener("click", function (event) {

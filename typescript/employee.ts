@@ -65,7 +65,7 @@ function addOnClickFunctions(){
         sortEmployeeTable(6);
     });
     
-    document.querySelector('[onclick="sortEmployeeTable(2)"]')!.addEventListener('click', function() {
+    document.querySelector('[onclick="sortEmployeeTable(7)"]')!.addEventListener('click', function() {
         sortEmployeeTable(7);
     });
     
