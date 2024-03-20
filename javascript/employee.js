@@ -31,25 +31,25 @@ function addOnClickFunctions() {
     (_h = document.getElementById("header-check-box")) === null || _h === void 0 ? void 0 : _h.addEventListener("click", function () {
         checkAllCheckBoxes();
     });
-    document.querySelector('[onclick="sortEmployeeTable(1)"]').addEventListener('click', function () {
+    document.querySelector(".user-heading").addEventListener('click', function () {
         sortEmployeeTable(1);
     });
-    document.querySelector('[onclick="sortEmployeeTable(2)"]').addEventListener('click', function () {
+    document.querySelector(".location-heading").addEventListener('click', function () {
         sortEmployeeTable(2);
     });
-    document.querySelector('[onclick="sortEmployeeTable(3)"]').addEventListener('click', function () {
+    document.querySelector(".department-heading").addEventListener('click', function () {
         sortEmployeeTable(3);
     });
-    document.querySelector('[onclick="sortEmployeeTable(4)"]').addEventListener('click', function () {
+    document.querySelector(".employee-role-heading").addEventListener('click', function () {
         sortEmployeeTable(4);
     });
-    document.querySelector('[onclick="sortEmployeeTable(5)"]').addEventListener('click', function () {
+    document.querySelector(".employee-number").addEventListener('click', function () {
         sortEmployeeTable(5);
     });
-    document.querySelector('[onclick="sortEmployeeTable(6)"]').addEventListener('click', function () {
+    document.querySelector(".status-heading").addEventListener('click', function () {
         sortEmployeeTable(6);
     });
-    document.querySelector('[onclick="sortEmployeeTable(7)"]').addEventListener('click', function () {
+    document.querySelector(".join-date-heading").addEventListener('click', function () {
         sortEmployeeTable(7);
     });
     (_j = document.getElementsByClassName("cancel-button")[0]) === null || _j === void 0 ? void 0 : _j.addEventListener("click", function (event) {
